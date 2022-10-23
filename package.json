@@ -1,0 +1,58 @@
+{
+  "name": "portfolio-cms",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fastify/static": "^6.4.1",
+    "@fastify/view": "^7.1.1",
+    "fastify": "4.3.0",
+    "handlebars": "^4.7.7",
+    "http-proxy-middleware": "^2.0.4",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "start": "concurrently -p name -n \"REACT,SERVER\" -c \"cyan,blue\" \"npm run start:client\" \"npm run start:server\"",
+    "start:client": "react-scripts start",
+    "start:server": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=src/server/tsconfig.json node-dev -r ts-node/register --inspect src/server.ts",
+    "prod": "cross-env NODE_ENV=production PORT=8080 HOST=0.0.0.0 node entry.js",
+    "build": "run-s build:client build:server",
+    "build:client": "react-scripts build",
+    "build:server": "tsc -p src/server",
+    "docker": "run-s docker:build docker:run",
+    "docker:build": "docker build --tag=portfolio-cms .",
+    "docker:run": "docker run -p 3002:8080 --env-file .env portfolio-cms",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.3",
+    "@types/node-fetch": "^2.6.1",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "node-dev": "^7.4.2",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.7.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

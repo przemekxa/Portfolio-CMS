@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "strict": false,
+    "noImplicitReturns": false,
+    "target": "es5",
+    "module": "esnext",
+    "noEmit": true
+  },
+  "include": ["./src"],
+  "exclude": ["./src/server.ts", "./src/server", "./src/webpage"]
+}
