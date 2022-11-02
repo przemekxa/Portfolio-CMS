@@ -11,14 +11,15 @@ const getApp = async () => {
     ignoreTrailingSlash: true,
   });
 
+  // admin-panel
   app.register(fastifyStatic, {
     root: path.resolve(__dirname, "..", "..", "build"),
   });
 
   app.register(fastifyStatic, {
-    root: path.join(__dirname, 'assets'),
-    prefix: '/assets/',
-    decorateReply: false
+    root: path.join(__dirname, "assets"),
+    prefix: "/assets/",
+    decorateReply: false,
   });
 
   app.register(fastifyView, {
@@ -28,10 +29,10 @@ const getApp = async () => {
     root: path.join(__dirname, "views"),
     options: {
       partials: {
-        header: 'partials/header.hbs',
-        footer: 'partials/footer.hbs'
-      }
-    }
+        header: "partials/header.hbs",
+        footer: "partials/footer.hbs",
+      },
+    },
   });
 
   app.get("/panel", (request, reply) => {
@@ -39,15 +40,12 @@ const getApp = async () => {
   });
 
   app.get("/", (request, reply) => {
-    return reply.view(
-      "/index.hbs",
-      {
-        name: "Przemek",
-        footer: {
-          copyright: 'some copyrigh text'
-        }
-      }
-      );
+    return reply.view("/index.hbs", {
+      name: "Przemek",
+      footer: {
+        copyright: "some copyrigh text",
+      },
+    });
   });
 
   // azure
