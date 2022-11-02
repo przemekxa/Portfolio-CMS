@@ -8,6 +8,7 @@
 ## setup
 
 - `npm ci` install packages
+- `npm run db:setup` setup database docker container
 
 ## run
 

@@ -5,9 +5,11 @@
   "dependencies": {
     "@fastify/static": "^6.4.1",
     "@fastify/view": "^7.1.1",
+    "dotenv": "^16.0.3",
     "fastify": "4.3.0",
     "handlebars": "^4.7.7",
     "http-proxy-middleware": "^2.0.4",
+    "mongodb": "^4.11.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
@@ -23,7 +25,8 @@
     "build:server": "tsc -p src/server",
     "docker": "run-s docker:build docker:run",
     "docker:build": "docker build --tag=portfolio-cms .",
-    "docker:run": "docker run -p 3002:8080 --env-file .env portfolio-cms",
+    "docker:run": "docker run -p 3002:8080 --env-file .env --env MONGO_URI=mongodb://host.docker.internal:27017 portfolio-cms",
+    "db:setup": "docker run -d -p 27017:27017 --name portfolio-cms-mongo mongo:6",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

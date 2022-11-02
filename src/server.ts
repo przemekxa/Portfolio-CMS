@@ -1,3 +1,7 @@
+import path from "path";
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+
+// eslint-disable-next-line import/first
 import getApp from "./server/app";
 
 (async () => {

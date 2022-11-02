@@ -9,5 +9,5 @@
     "rootDir": "..",
     "isolatedModules": false
   },
-  "include": ["./", "../server.ts"]
+  "include": ["./", "../server.ts", "../common/"]
 }

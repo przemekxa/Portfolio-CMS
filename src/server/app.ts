@@ -3,6 +3,8 @@ import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import path from "path";
 import handlebars from "handlebars";
+import mongo from "./mongo";
+import { TestModel } from "../common/collections";
 
 const getApp = async () => {
   const app = fastify({
@@ -46,6 +48,15 @@ const getApp = async () => {
         copyright: "some copyrigh text",
       },
     });
+  });
+
+  app.post("/test/:value", async (request, reply) => {
+    const value = (request.params as any).value;
+    return mongo.insertMany<TestModel>("test", [{ value }]);
+  });
+
+  app.get("/test", async (request, reply) => {
+    return mongo.find<TestModel>("test");
   });
 
   // azure
