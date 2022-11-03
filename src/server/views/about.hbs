@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{> head }}
+  <body>
+    <div id="site-border-left"></div>
+    <div id="site-border-right"></div>
+    <div id="site-border-top"></div>
+    <div id="site-border-bottom"></div>
+
+    {{> header }}
+
+    <div class="section-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="section-container-spacer text-center">
+              <h1 class="h2">{{title}}</h1>
+            </div>
+          
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    {{{contents}}}
+                  </div>
+                  {{#with profileImage}}
+                    <div class="col-xs-12 col-md-6">
+                      <img src="{{.}}" class="img-responsive" alt="">
+                    </div>
+                  {{/with}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{> footer footer }}
+  </body>
+</html>

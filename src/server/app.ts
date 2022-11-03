@@ -30,6 +30,7 @@ const getApp = async () => {
     root: path.join(__dirname, "views"),
     options: {
       partials: {
+        head: "partials/head.hbs",
         header: "partials/header.hbs",
         footer: "partials/footer.hbs",
       },
