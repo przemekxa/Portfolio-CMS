@@ -5,6 +5,10 @@ import autoLoad from "@fastify/autoload";
 import path from "path";
 import handlebars from "handlebars";
 
+handlebars.registerHelper("eq", (context, options) => {
+  return context === options;
+})
+
 const getApp = async () => {
   const app = fastify({
     logger: true,
