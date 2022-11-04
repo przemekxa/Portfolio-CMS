@@ -22,7 +22,91 @@ const index: FastifyPluginAsync = async (fastify): Promise<void> => {
           href: "/contact"
         }
       ],
-      name: "Przemek",
+      backgroundImage: "./assets/images/space.jpg",
+      typingText: {
+        title: "Hello,",
+        items: [
+          "I'm James Dean",
+          "French Designer",
+          "Working as a Freelance",
+        ],
+      },
+      footer: {
+        copyright: "some copyrigh text",
+      },
+    });
+  });
+
+  fastify.get("/works", async (request, reply) => {
+    return reply.view("/works.hbs", {
+      title: "Works",
+      menu: [
+        {
+          title: "Home",
+          href: "/"
+        },
+        {
+          title: "Works",
+          href: "/works"
+        },
+        {
+          title: "About Me",
+          href: "/about"
+        },
+        {
+          title: "Contact",
+          href: "/contact"
+        }
+      ],
+      description: "<p>Nulla <b>facilisi</b>. Vivamus vestibulum, elit in scelerisque ultricies, nisl nunc pulvinar ligula, id sodales arcu sapien in nisi. Quisque libero enim, mattis non augue posuere, venenatis dapibus urna.</p>",
+      works: [
+        [
+          {
+            number: "001/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work01-hover.jpg",
+            href: "/"
+          },
+          {
+            number: "002/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work02-hover.jpg",
+            href: "/"
+          },
+          {
+            number: "003/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work03-hover.jpg",
+            href: "/"
+          }
+        ],
+        [
+          {
+            number: "004/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work03-hover.jpg",
+            href: "/"
+          },
+          {
+            number: "005/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work02-hover.jpg",
+            href: "/"
+          },
+          {
+            number: "006/022",
+            title: "Fringilla sit amet",
+            description: "Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.",
+            image: "./assets/images/work01-hover.jpg",
+            href: "/"
+          }
+        ]
+      ],
       footer: {
         copyright: "some copyrigh text",
       },
