@@ -31,6 +31,17 @@ const index: FastifyPluginAsync = async (fastify): Promise<void> => {
           "Working as a Freelance",
         ],
       },
+      sections: [
+        {
+          type: "paragraph",
+          contents: "<p>Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies, nisl nunc pulvinar ligula, id sodales arcu sapien in nisi. Quisque libero enim, mattis non augue posuere, venenatis dapibus urna.</p>",
+        },
+        {
+          type: "1image",
+          title: "Menphis skyline 1",
+          src: "/assets/images/work001-04.jpg",
+        },
+      ],
       footer: {
         copyright: "some copyrigh text",
       },

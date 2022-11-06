@@ -30,6 +30,14 @@
       </div>
     </div>
 
+    {{#with sections}}
+      <div class="section-container">
+        <div class="container">
+          {{> sections . }}
+        </div>
+      </div>
+    {{/with}}
+
     <script>
       document.addEventListener("DOMContentLoaded", function (event) {
         type();

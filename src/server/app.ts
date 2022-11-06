@@ -37,6 +37,7 @@ const getApp = async () => {
         head: "partials/head.hbs",
         header: "partials/header.hbs",
         footer: "partials/footer.hbs",
+        sections: "partials/sections.hbs",
       },
     },
   });

@@ -1,0 +1,42 @@
+{{#each .}}
+  <div class="row section-container-spacer">
+    {{#if (eq type "1image")}}
+
+      {{! Section - 1 image }}
+      <div class="col-xs-12">
+        <img src="{{src}}" class="img-responsive" alt="">
+        {{#with title}}
+          <p>{{.}}</p>
+        {{/with}}
+      </div>
+
+    {{else if (eq type "2images")}}
+
+      {{! Section - 2 images }}
+      <div class="col-md-8 col-md-offset-2">
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <img src="{{images.[0].src}}" class="img-responsive" alt="">
+            {{#with images.[0].title}}
+              <p>{{.}}</p>
+            {{/with}}
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <img src="{{images.[1].src}}" class="img-responsive" alt="">
+            {{#with images.[1].title}}
+              <p>{{.}}</p>
+            {{/with}}
+          </div>
+        </div>
+      </div>
+
+    {{else if (eq type "paragraph")}}
+    
+      {{! Section - Paragraph }}
+      <div class="col-xs-12">
+        {{{contents}}}
+      </div>
+
+    {{/if}}
+  </div>
+{{/each}}
