@@ -1,17 +1,17 @@
 import React from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
-import SignIn from "./pages/SignIn";
+// import SignIn from "./pages/SignIn";
+import { theme } from "./theme";
+import Index from "./pages/Index";
 
 function App() {
-  const theme = createTheme();
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SignIn />
+      <Index />
     </ThemeProvider>
   );
 }
