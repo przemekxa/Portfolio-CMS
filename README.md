@@ -16,5 +16,5 @@
 
 ## development
 
-- `npm start` run admin panel with backend server
+- `npm start` run admin panel with backend server - panel is available on /panel path
 - `npm run start:server` run only backend - sufficient for webpage development
