@@ -1,17 +1,17 @@
 import React from "react";
 
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-
-// import SignIn from "./pages/SignIn";
 import { theme } from "./theme";
-import Index from "./pages/Index";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Index />
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { Box, Divider, Drawer, useMediaQuery, Theme } from "@mui/material";
 import ChartBarIcon from "../icons/ChartBar";
 import CogIcon from "../icons/Cog";
@@ -40,14 +42,14 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
       >
         <div>
           <Box sx={{ p: 3 }}>
-            <a>
+            <Link to="/">
               <Logo
                 sx={{
                   height: 42,
                   width: 42,
                 }}
               />
-            </a>
+            </Link>
           </Box>
         </div>
         <Divider
