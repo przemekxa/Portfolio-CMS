@@ -19,7 +19,15 @@ declare module "fastify" {
 
 handlebars.registerHelper("eq", (context, options) => {
   return context === options;
-})
+});
+
+handlebars.registerHelper("chunked", (context: [any], options: number) => {
+  let chunked = [];
+  for(let i = 0; i < context.length; i += options) {
+    chunked.push(context.slice(i, i + options));
+  }
+  return chunked;
+});
 
 const getApp = async () => {
   const app = fastify({

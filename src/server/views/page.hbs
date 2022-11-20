@@ -12,21 +12,7 @@
 
   <div class="section-container">
     <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          {{#with card}}
-            <img src="{{backgroundImage}}" class="img-responsive" alt="">
-            <div class="card-container">
-              <div class="text-center">
-                <h1 class="h2">{{title}}</h1>
-              </div>
-              {{{description}}}
-            </div>
-          {{/with}}
-        </div>
-      </div>
-      
-      {{> sections sections }}
+      {{> sections sections=sections page=.}}
     </div>
   </div>
 
