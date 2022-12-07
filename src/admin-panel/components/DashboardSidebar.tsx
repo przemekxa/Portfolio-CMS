@@ -15,9 +15,9 @@ const items = [
   },
 
   {
-    href: "/settings",
+    href: "/sections",
     icon: <CogIcon fontSize="small" />,
-    title: "Settings",
+    title: "SectionsComponent",
   },
 ];
 

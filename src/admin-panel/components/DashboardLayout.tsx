@@ -30,6 +30,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             flexDirection: "column",
             width: "100%",
           }}
+          paddingTop={4}
         >
           {children}
         </Box>
