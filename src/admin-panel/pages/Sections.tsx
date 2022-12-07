@@ -26,7 +26,7 @@ const Sections: React.FC = () => {
       <Container>
         <Grid container gap={4}>
           {sections.map((section) => (
-            <Section>
+            <Section key={section.text}>
               <Typography>{section.text}</Typography>
             </Section>
           ))}

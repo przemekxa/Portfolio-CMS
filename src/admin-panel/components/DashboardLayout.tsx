@@ -31,6 +31,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             width: "100%",
           }}
           paddingTop={4}
+          paddingBottom={16}
         >
           {children}
         </Box>
