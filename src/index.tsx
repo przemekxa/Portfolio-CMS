@@ -5,7 +5,7 @@ import App from "./admin-panel/App";
 const container = document.getElementById("root");
 const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode> issues with dnd
+  <App />
+  // </React.StrictMode>
 );
