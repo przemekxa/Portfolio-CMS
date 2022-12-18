@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 
 const panel: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.get("/*", async (request, reply) => {
+  fastify.get("*", async (request, reply) => {
     return reply.sendFile("index.html");
   });
 };
