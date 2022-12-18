@@ -8,11 +8,11 @@ import {
 
 import { reorder } from "../dndHelpers";
 
-import { Box, Container, Fab, Grid, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Container, Grid, Typography } from "@mui/material";
 
 import DashboardLayout from "../components/DashboardLayout";
 import Section from "../components/Section";
+import AddSection from "../components/AddSection";
 
 const fakeSections = [
   {
@@ -89,17 +89,7 @@ const Sections: React.FC = () => {
           </Droppable>
         </DragDropContext>
       </Container>
-      <Box
-        position="fixed"
-        bottom={0}
-        right={0}
-        marginBottom={4}
-        marginRight={4}
-      >
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </Box>
+      <AddSection />
     </DashboardLayout>
   );
 };
