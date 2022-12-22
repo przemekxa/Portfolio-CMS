@@ -8,7 +8,8 @@ import {
 
 import { reorder } from "../dndHelpers";
 
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Fab, Grid, Grow } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 
 import DashboardLayout from "../components/DashboardLayout";
 import SectionComponent from "../components/Section";
@@ -36,7 +37,15 @@ const fakeSections: Section[] = [
 ];
 
 const Sections: React.FC = () => {
-  const [sections, setSections] = React.useState<Section[]>(fakeSections);
+  const [sections, _setSections] = React.useState<Section[]>(fakeSections);
+  const [didSectionsChange, setDidSectionsChange] = React.useState(false);
+
+  const setSections: React.Dispatch<React.SetStateAction<Section[]>> = (
+    action
+  ) => {
+    setDidSectionsChange(true);
+    _setSections(action);
+  };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -52,6 +61,8 @@ const Sections: React.FC = () => {
       result.source.index,
       result.destination.index
     );
+
+    setDidSectionsChange(true);
 
     setSections(newSectionsOrder);
   };
@@ -70,6 +81,11 @@ const Sections: React.FC = () => {
 
   const handleDeleteSection = (sectionId: string) => {
     setSections((prev) => prev.filter(({ id }) => id !== sectionId));
+  };
+
+  const handleSaveSections = () => {
+    console.log("TODO: handleSaveSection");
+    setDidSectionsChange(false);
   };
 
   return (
@@ -108,6 +124,20 @@ const Sections: React.FC = () => {
         </DragDropContext>
       </Container>
       <AddSection onAddSection={handleAddSection} />
+
+      <Grow in={didSectionsChange}>
+        <Box
+          position="fixed"
+          bottom={0}
+          right={0}
+          marginBottom={4}
+          marginRight={14}
+        >
+          <Fab color="primary" aria-label="save">
+            <SaveIcon onClick={handleSaveSections} />
+          </Fab>
+        </Box>
+      </Grow>
     </DashboardLayout>
   );
 };
