@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import {
@@ -15,23 +15,26 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
 import EditIcon from "@mui/icons-material/Edit";
+import { Section } from "../../common/sections";
+import SectionData from "./SectionData";
+import EditSectionModal from "./EditSectionModal";
 
-interface Props extends PropsWithChildren {
-  onDelete?: () => void;
+type Props = {
+  section: Section;
+  onEdit: (section: Section) => void;
+  onDelete: (id: string) => void;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
   // other draggable props
-}
+};
 
-const Section = React.forwardRef<any, Props>(
-  ({ children, onDelete, dragHandleProps, ...props }, ref) => {
+const SectionComponent = React.forwardRef<any, Props>(
+  ({ section, onEdit, onDelete, dragHandleProps, ...props }, ref) => {
     const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
     const handleCloseDeleteModal = () => setDeleteModalOpen(false);
 
     const handleDelete = () => {
-      if (onDelete) {
-        onDelete();
-      }
+      onDelete(section.id);
 
       handleCloseDeleteModal();
     };
@@ -39,14 +42,18 @@ const Section = React.forwardRef<any, Props>(
     return (
       <>
         <Card ref={ref} sx={{ width: "100%", marginBottom: 4 }} {...props}>
-          <CardContent>{children}</CardContent>
-          <CardActions sx={{ justifyContent: "flex-end" }}>
+          <CardContent>
+            <SectionData section={section} />
+          </CardContent>
+          <CardActions disableSpacing sx={{ justifyContent: "flex-end" }}>
             <IconButton {...dragHandleProps}>
               <OpenWithIcon />
             </IconButton>
-            <IconButton>
-              <EditIcon />
-            </IconButton>
+            <EditSectionModal value={section} onEdit={onEdit}>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </EditSectionModal>
             <IconButton onClick={() => setDeleteModalOpen(true)}>
               <DeleteForeverIcon />
             </IconButton>
@@ -72,4 +79,4 @@ const Section = React.forwardRef<any, Props>(
   }
 );
 
-export default Section;
+export default SectionComponent;

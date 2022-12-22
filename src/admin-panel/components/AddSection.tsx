@@ -6,13 +6,25 @@ import {
   CardContent,
   Dialog,
   DialogContent,
+  DialogTitle,
   Fab,
   Grid,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Section, sectionTypes } from "../../common/sections";
+import EditSectionModal from "./EditSectionModal";
+import generateEmptySection from "../../common/defaultGenerator";
 
-const AddSection: React.FC = () => {
+type Props = {
+  onAddSection: (section: Section) => void;
+};
+const AddSection: React.FC<Props> = ({ onAddSection }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
+
+  const handleAddSection = (section: Section) => {
+    onAddSection(section);
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -28,17 +40,20 @@ const AddSection: React.FC = () => {
         </Fab>
       </Box>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
+        <DialogTitle>Add Section</DialogTitle>
         <DialogContent>
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 1, sm: 2, md: 4 }}
-          >
-            {Array.from(Array(6)).map((_, index) => (
-              <Grid item key={index}>
-                <Card elevation={10}>
-                  <CardContent>smth</CardContent>
-                </Card>
+          <Grid container spacing={{ xs: 2, sm: 3 }} columns={12}>
+            {sectionTypes.map((section) => (
+              <Grid item xs={12} sm={6} key={section.type}>
+                <EditSectionModal
+                  add
+                  onEdit={handleAddSection}
+                  value={generateEmptySection(section.type)}
+                >
+                  <Card elevation={10}>
+                    <CardContent>{section.name}</CardContent>
+                  </Card>
+                </EditSectionModal>
               </Grid>
             ))}
           </Grid>

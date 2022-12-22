@@ -8,29 +8,35 @@ import {
 
 import { reorder } from "../dndHelpers";
 
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
 import DashboardLayout from "../components/DashboardLayout";
-import Section from "../components/Section";
+import SectionComponent from "../components/Section";
 import AddSection from "../components/AddSection";
+import { Section } from "../../common/sections";
 
-const fakeSections = [
+const fakeSections: Section[] = [
   {
-    id: 1,
-    text: "Consectetur aliqua ea culpa excepteur. Irure commodo nostrud nisi sunt ad aliquip adipisicing in culpa enim reprehenderit. Veniam dolor excepteur tempor ipsum mollit labore proident anim et consequat. Deserunt dolor duis ad esse exercitation in esse adipisicing reprehenderit.",
+    id: "1",
+    type: "paragraph",
+    contents:
+      "Consectetur aliqua ea culpa excepteur. Irure commodo nostrud nisi sunt ad aliquip adipisicing in culpa enim reprehenderit. Veniam dolor excepteur tempor ipsum mollit labore proident anim et consequat. Deserunt dolor duis ad esse exercitation in esse adipisicing reprehenderit.",
   },
   {
-    id: 2,
-    text: "Id sit pariatur et irure ea aute ut reprehenderit aliquip voluptate enim officia mollit dolor. Officia magna sunt laboris et reprehenderit deserunt reprehenderit officia officia id ullamco. Amet commodo adipisicing irure duis labore ad est ex ad ullamco veniam sint. Ex laborum quis pariatur elit sint esse officia velit amet excepteur incididunt voluptate cillum laboris. Tempor fugiat sunt labore in ex magna magna deserunt dolor officia ex Lorem. Cillum culpa ipsum laborum duis qui ut excepteur ex.",
+    id: "2",
+    type: "paragraph",
+    contents:
+      "Id sit pariatur et irure ea aute ut reprehenderit aliquip voluptate enim officia mollit dolor. Officia magna sunt laboris et reprehenderit deserunt reprehenderit officia officia id ullamco. Amet commodo adipisicing irure duis labore ad est ex ad ullamco veniam sint. Ex laborum quis pariatur elit sint esse officia velit amet excepteur incididunt voluptate cillum laboris. Tempor fugiat sunt labore in ex magna magna deserunt dolor officia ex Lorem. Cillum culpa ipsum laborum duis qui ut excepteur ex.",
   },
   {
-    id: 3,
-    text: "Ea id minim occaecat incididunt labore elit anim minim velit elit adipisicing amet aute anim.",
+    id: "3",
+    type: "header",
+    header: "Ea id minim occaecat incididunt",
   },
 ];
 
 const Sections: React.FC = () => {
-  const [sections, setSections] = React.useState(fakeSections);
+  const [sections, setSections] = React.useState<Section[]>(fakeSections);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -48,6 +54,22 @@ const Sections: React.FC = () => {
     );
 
     setSections(newSectionsOrder);
+  };
+
+  const handleEditSection = (updatedSection: Section) => {
+    setSections((prev) =>
+      prev.map((section) =>
+        section.id === updatedSection.id ? updatedSection : section
+      )
+    );
+  };
+
+  const handleAddSection = (section: Section) => {
+    setSections((prev) => [...prev, section]);
+  };
+
+  const handleDeleteSection = (sectionId: string) => {
+    setSections((prev) => prev.filter(({ id }) => id !== sectionId));
   };
 
   return (
@@ -68,18 +90,14 @@ const Sections: React.FC = () => {
                     key={section.id}
                   >
                     {(provided) => (
-                      <Section
+                      <SectionComponent
+                        section={section}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         dragHandleProps={provided.dragHandleProps}
-                        onDelete={() =>
-                          setSections((prev) =>
-                            prev.filter(({ id }) => id !== section.id)
-                          )
-                        }
-                      >
-                        <Typography>{section.text}</Typography>
-                      </Section>
+                        onEdit={handleEditSection}
+                        onDelete={handleDeleteSection}
+                      />
                     )}
                   </Draggable>
                 ))}
@@ -89,7 +107,7 @@ const Sections: React.FC = () => {
           </Droppable>
         </DragDropContext>
       </Container>
-      <AddSection />
+      <AddSection onAddSection={handleAddSection} />
     </DashboardLayout>
   );
 };
