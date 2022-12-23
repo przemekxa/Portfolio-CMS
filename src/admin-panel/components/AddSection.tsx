@@ -35,8 +35,12 @@ const AddSection: React.FC<Props> = ({ onAddSection }) => {
         marginBottom={4}
         marginRight={4}
       >
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={() => setModalOpen(true)} />
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={() => setModalOpen(true)}
+        >
+          <AddIcon />
         </Fab>
       </Box>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>

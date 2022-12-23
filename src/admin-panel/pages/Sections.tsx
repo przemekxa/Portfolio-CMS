@@ -133,8 +133,8 @@ const Sections: React.FC = () => {
           marginBottom={4}
           marginRight={14}
         >
-          <Fab color="primary" aria-label="save">
-            <SaveIcon onClick={handleSaveSections} />
+          <Fab color="primary" aria-label="save" onClick={handleSaveSections}>
+            <SaveIcon />
           </Fab>
         </Box>
       </Grow>
