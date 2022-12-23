@@ -1,6 +1,13 @@
 import React from "react";
+import DOMpurify from "dompurify";
+import HTMLParser from "html-react-parser";
 
-import { isHeader, isParagraph, Section } from "../../common/sections";
+import {
+  isHeader,
+  isParagraph,
+  isRichText,
+  Section,
+} from "../../common/sections";
 
 import { Typography } from "@mui/material";
 
@@ -14,6 +21,12 @@ const SectionData: React.FC<Props> = ({ section }) => {
 
   if (isParagraph(section)) {
     return <Typography>{section.contents}</Typography>;
+  }
+
+  if (isRichText(section)) {
+    // const purified = DOMpurify.sanitize(section.value);
+    const component = HTMLParser(section.value);
+    return <>{component}</>;
   }
 
   return null;

@@ -47,7 +47,7 @@ const EditSectionModal: React.FC<Props> = ({
             Cancel
           </Button>
           <Button variant="contained" onClick={handleEdit}>
-            {add ? `Add` : `Edit`} section
+            {add ? `Add section` : `Apply changes`}
           </Button>
         </DialogActions>
       </Dialog>

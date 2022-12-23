@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Header, Paragraph, SectionTypeId } from "./sections";
+import { Header, Paragraph, RichText, SectionTypeId } from "./sections";
 
 const generateEmptySection = (sectionType: SectionTypeId) => {
   const id = uuidv4();
@@ -19,6 +19,14 @@ const generateEmptySection = (sectionType: SectionTypeId) => {
         contents: "",
       };
       return paragraphSection;
+
+    case "richText":
+      const richText: RichText = {
+        id,
+        type: "richText",
+        value: "",
+      };
+      return richText;
 
     default:
       const _exhaustiveCheck: never = sectionType;

@@ -1,8 +1,14 @@
 import React from "react";
 
-import { isHeader, isParagraph, Section } from "../../common/sections";
+import {
+  isHeader,
+  isParagraph,
+  isRichText,
+  Section,
+} from "../../common/sections";
 
 import { TextField } from "@mui/material";
+import RichTextEditor from "./RichTextEditor";
 
 type Props = {
   section: Section;
@@ -28,6 +34,17 @@ const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
         value={section.contents}
         onChange={(e) =>
           setSection((prev) => ({ ...prev, contents: e.target.value }))
+        }
+      />
+    );
+  }
+
+  if (isRichText(section)) {
+    return (
+      <RichTextEditor
+        value={section.value}
+        onChange={(data: string) =>
+          setSection((prev) => ({ ...prev, value: data }))
         }
       />
     );

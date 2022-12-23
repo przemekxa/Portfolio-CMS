@@ -1,4 +1,4 @@
-export type SectionTypeId = "header" | "paragraph";
+export type SectionTypeId = "header" | "paragraph" | "richText";
 
 interface SectionType {
   type: SectionTypeId;
@@ -13,6 +13,10 @@ export const sectionTypes: SectionType[] = [
   {
     type: "paragraph",
     name: "Paragraph",
+  },
+  {
+    type: "richText",
+    name: "Rich Text Editor",
   },
 ];
 
@@ -31,8 +35,14 @@ export interface Paragraph extends SectionData {
   contents: string;
 }
 
-export type Section = Header | Paragraph;
+export interface RichText extends SectionData {
+  type: "richText";
+  value: string;
+}
+
+export type Section = Header | Paragraph | RichText;
 
 export const isHeader = (s: Section): s is Header => s.type === "header";
 export const isParagraph = (s: Section): s is Paragraph =>
   s.type === "paragraph";
+export const isRichText = (s: Section): s is RichText => s.type === "richText";

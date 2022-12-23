@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^35.4.0",
+    "@ckeditor/ckeditor5-react": "^5.0.5",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fastify/autoload": "^5.4.1",
@@ -12,9 +14,11 @@
     "@fastify/view": "^7.1.1",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "dompurify": "^2.4.1",
     "dotenv": "^16.0.3",
     "fastify": "4.3.0",
     "handlebars": "^4.7.7",
+    "html-react-parser": "^3.0.4",
     "http-proxy-middleware": "^2.0.4",
     "mongodb": "^4.11.0",
     "react": "^18.0.0",
@@ -46,6 +50,8 @@
     ]
   },
   "devDependencies": {
+    "@types/ckeditor__ckeditor5-build-classic": "^29.0.1",
+    "@types/dompurify": "^2.4.0",
     "@types/node": "^18.11.3",
     "@types/node-fetch": "^2.6.1",
     "@types/react": "^18.0.21",
