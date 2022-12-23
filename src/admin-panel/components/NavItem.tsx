@@ -25,7 +25,6 @@ const NavItem: React.FC<Props> = ({ href, icon, title }) => {
         }}
       >
         <Button
-          component="a"
           startIcon={icon}
           disableRipple
           sx={{
