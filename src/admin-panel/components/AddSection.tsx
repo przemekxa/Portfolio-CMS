@@ -13,7 +13,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Section, sectionTypes } from "../../common/sections";
 import EditSectionModal from "./EditSectionModal";
-import generateEmptySection from "../../common/defaultGenerator";
+import { createDefaultSection } from "../../common/defaultSections";
 
 type Props = {
   onAddSection: (section: Section) => void;
@@ -52,7 +52,7 @@ const AddSection: React.FC<Props> = ({ onAddSection }) => {
                 <EditSectionModal
                   add
                   onEdit={handleAddSection}
-                  value={generateEmptySection(section.type)}
+                  value={createDefaultSection(section.type)}
                 >
                   <Card elevation={10}>
                     <CardContent>{section.name}</CardContent>

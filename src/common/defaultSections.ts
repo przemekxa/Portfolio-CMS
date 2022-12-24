@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Header, Paragraph, RichText, SectionTypeId } from "./sections";
 
-const generateEmptySection = (sectionType: SectionTypeId) => {
+export const createDefaultSection = (sectionType: SectionTypeId) => {
   const id = uuidv4();
   switch (sectionType) {
     case "header":
@@ -33,5 +33,3 @@ const generateEmptySection = (sectionType: SectionTypeId) => {
       return _exhaustiveCheck;
   }
 };
-
-export default generateEmptySection;

@@ -2,7 +2,7 @@ import React from "react";
 import slugify from "slugify";
 import { useParams } from "react-router-dom";
 import { pages as fakePages } from "../fakeData";
-import { Page } from "../../common/pages";
+import { createDefaultPage, Page } from "../../common/pages";
 import { Section } from "../../common/sections";
 
 import {
@@ -18,16 +18,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import DashboardLayout from "../components/DashboardLayout";
 import Sections from "../components/Sections";
 
-const defaultEmptyPage: Page = {
-  id: "",
-  title: "",
-  description: "",
-  subpages: [],
-  sections: [],
-};
-
 const getPageData = (pageId?: string) =>
-  fakePages.find((page) => page.id === pageId) || defaultEmptyPage;
+  fakePages.find((page) => page.id === pageId) || createDefaultPage();
 
 const PagePage: React.FC = () => {
   const { pageId } = useParams();

@@ -8,3 +8,11 @@ export interface Page {
   subpages: string[]; // page id
   sections: Section[];
 }
+
+export const createDefaultPage = (): Page => ({
+  id: "",
+  title: "",
+  description: "",
+  subpages: [],
+  sections: [],
+});
