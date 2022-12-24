@@ -44,7 +44,7 @@ const PagePage: React.FC = () => {
     setDidSectionsChange(false);
   }, [pageId]);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPage((prev) => ({
       ...prev,
       id: slugify(e.target.value),
@@ -64,8 +64,8 @@ const PagePage: React.FC = () => {
     <DashboardLayout>
       <Box display={"flex"} flexWrap="wrap" gap={4}>
         <FormControl>
-          <FormLabel>Name</FormLabel>
-          <TextField value={page.title} onChange={handleNameChange} />
+          <FormLabel>Title</FormLabel>
+          <TextField value={page.title} onChange={handleTitleChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Id</FormLabel>
