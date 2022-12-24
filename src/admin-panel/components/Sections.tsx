@@ -5,30 +5,18 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
-
 import { reorder } from "../dndHelpers";
+import { Section } from "../../common/sections";
 
-import { Box, Fab, Grid, Grow, Typography } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
-
+import { Grid, Typography } from "@mui/material";
 import SectionComponent from "../components/Section";
 import AddSection from "../components/AddSection";
-import { Section } from "../../common/sections";
 
 type Props = {
   sections: Section[];
+  onChange: (sections: Section[]) => void;
 };
-const Sections: React.FC<Props> = ({ sections: initialSections }) => {
-  const [sections, _setSections] = React.useState<Section[]>(initialSections);
-  const [didSectionsChange, setDidSectionsChange] = React.useState(false);
-
-  const setSections: React.Dispatch<React.SetStateAction<Section[]>> = (
-    action
-  ) => {
-    setDidSectionsChange(true);
-    _setSections(action);
-  };
-
+const Sections: React.FC<Props> = ({ sections, onChange }) => {
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
@@ -44,30 +32,23 @@ const Sections: React.FC<Props> = ({ sections: initialSections }) => {
       result.destination.index
     );
 
-    setDidSectionsChange(true);
-
-    setSections(newSectionsOrder);
+    onChange(newSectionsOrder);
   };
 
   const handleEditSection = (updatedSection: Section) => {
-    setSections((prev) =>
-      prev.map((section) =>
+    onChange(
+      sections.map((section) =>
         section.id === updatedSection.id ? updatedSection : section
       )
     );
   };
 
   const handleAddSection = (section: Section) => {
-    setSections((prev) => [...prev, section]);
+    onChange([...sections, section]);
   };
 
   const handleDeleteSection = (sectionId: string) => {
-    setSections((prev) => prev.filter(({ id }) => id !== sectionId));
-  };
-
-  const handleSaveSections = () => {
-    console.log("TODO: handleSaveSection");
-    setDidSectionsChange(false);
+    onChange(sections.filter(({ id }) => id !== sectionId));
   };
 
   return (
@@ -109,20 +90,6 @@ const Sections: React.FC<Props> = ({ sections: initialSections }) => {
         </Droppable>
       </DragDropContext>
       <AddSection onAddSection={handleAddSection} />
-
-      <Grow in={didSectionsChange}>
-        <Box
-          position="fixed"
-          bottom={0}
-          right={0}
-          marginBottom={4}
-          marginRight={14}
-        >
-          <Fab color="primary" aria-label="save" onClick={handleSaveSections}>
-            <SaveIcon />
-          </Fab>
-        </Box>
-      </Grow>
     </>
   );
 };

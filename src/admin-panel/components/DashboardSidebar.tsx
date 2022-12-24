@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { pagesPrefix } from "../router";
+import { pages as fakePages } from "../fakeData";
 
 import { Box, Divider, Drawer, useMediaQuery, Theme } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
@@ -9,20 +11,6 @@ import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import ArticleIcon from "@mui/icons-material/Article";
 import Logo from "./Logo";
 import NavItem from "./NavItem";
-
-const pages = [
-  {
-    href: "/",
-    icon: <HomeIcon />,
-    title: "Home Page",
-  },
-
-  {
-    href: "/sections",
-    icon: <ArticleIcon />,
-    title: "SectionsComponent",
-  },
-];
 
 const CustomDivider = () => (
   <Divider
@@ -66,12 +54,12 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
 
       <CustomDivider />
       <Box sx={{ flexGrow: 1 }}>
-        {pages.map((item) => (
+        {fakePages.map((page) => (
           <NavItem
-            key={item.title}
-            icon={item.icon}
-            href={item.href}
-            title={item.title}
+            key={page.id}
+            icon={page.id === "Home" ? <HomeIcon /> : <ArticleIcon />}
+            href={`${pagesPrefix}/${page.id}`}
+            title={page.title}
           />
         ))}
         <NavItem
