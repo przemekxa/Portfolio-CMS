@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardNavbar from "./DashboardNavbar";
@@ -33,7 +33,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
           paddingTop={4}
           paddingBottom={16}
         >
-          {children}
+          <Container>{children}</Container>
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />

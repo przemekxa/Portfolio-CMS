@@ -1,20 +1,8 @@
 import React from "react";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
-
-import { reorder } from "../dndHelpers";
-
-import { Box, Container, Fab, Grid, Grow } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
+import { Section } from "../../common/sections";
 
 import DashboardLayout from "../components/DashboardLayout";
-import SectionComponent from "../components/Section";
-import AddSection from "../components/AddSection";
-import { Section } from "../../common/sections";
+import Sections from "../components/Sections";
 
 const fakeSections: Section[] = [
   {
@@ -36,110 +24,12 @@ const fakeSections: Section[] = [
   },
 ];
 
-const Sections: React.FC = () => {
-  const [sections, _setSections] = React.useState<Section[]>(fakeSections);
-  const [didSectionsChange, setDidSectionsChange] = React.useState(false);
-
-  const setSections: React.Dispatch<React.SetStateAction<Section[]>> = (
-    action
-  ) => {
-    setDidSectionsChange(true);
-    _setSections(action);
-  };
-
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-
-    const newSectionsOrder = reorder(
-      sections,
-      result.source.index,
-      result.destination.index
-    );
-
-    setDidSectionsChange(true);
-
-    setSections(newSectionsOrder);
-  };
-
-  const handleEditSection = (updatedSection: Section) => {
-    setSections((prev) =>
-      prev.map((section) =>
-        section.id === updatedSection.id ? updatedSection : section
-      )
-    );
-  };
-
-  const handleAddSection = (section: Section) => {
-    setSections((prev) => [...prev, section]);
-  };
-
-  const handleDeleteSection = (sectionId: string) => {
-    setSections((prev) => prev.filter(({ id }) => id !== sectionId));
-  };
-
-  const handleSaveSections = () => {
-    console.log("TODO: handleSaveSection");
-    setDidSectionsChange(false);
-  };
-
+const SectionsPage: React.FC = () => {
   return (
     <DashboardLayout>
-      <Container>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="sectionsList">
-            {(provided) => (
-              <Grid
-                container
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {sections.map((section, index) => (
-                  <Draggable
-                    draggableId={section.id.toString()}
-                    index={index}
-                    key={section.id}
-                  >
-                    {(provided) => (
-                      <SectionComponent
-                        section={section}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        dragHandleProps={provided.dragHandleProps}
-                        onEdit={handleEditSection}
-                        onDelete={handleDeleteSection}
-                      />
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Grid>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </Container>
-      <AddSection onAddSection={handleAddSection} />
-
-      <Grow in={didSectionsChange}>
-        <Box
-          position="fixed"
-          bottom={0}
-          right={0}
-          marginBottom={4}
-          marginRight={14}
-        >
-          <Fab color="primary" aria-label="save" onClick={handleSaveSections}>
-            <SaveIcon />
-          </Fab>
-        </Box>
-      </Grow>
+      <Sections sections={fakeSections} />
     </DashboardLayout>
   );
 };
 
-export default Sections;
+export default SectionsPage;
