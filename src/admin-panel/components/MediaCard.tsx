@@ -4,7 +4,7 @@ import {
   Button,
   Card,
   CardActions,
-  CardContent,
+  CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
@@ -28,17 +28,11 @@ const MediaCard: React.FC<Props> = ({ file }) => {
   return (
     <>
       <Card>
-        <CardContent sx={{ display: "flex", justifyContent: "center" }}>
-          <img
-            src={URL.createObjectURL(file)}
-            style={{
-              height: 200,
-              objectFit: "contain",
-              maxWidth: "100%",
-            }}
-            alt="uploaded media"
-          />
-        </CardContent>
+        <CardMedia
+          component="img"
+          src={URL.createObjectURL(file)}
+          height={200}
+        />
         <CardActions sx={{ justifyContent: "space-between", pl: 3 }}>
           <Typography>{file.name}</Typography>
           <IconButton onClick={() => setDeleteModalOpen(true)}>
