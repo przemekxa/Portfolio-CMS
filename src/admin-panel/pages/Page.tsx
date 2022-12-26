@@ -7,6 +7,8 @@ import { Section } from "../../common/sections";
 
 import {
   Box,
+  Card,
+  CardContent,
   Divider,
   Fab,
   FormControl,
@@ -54,16 +56,20 @@ const PagePage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <Box display={"flex"} flexWrap="wrap" gap={4}>
-        <FormControl>
-          <FormLabel>Title</FormLabel>
-          <TextField value={page.title} onChange={handleTitleChange} />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Id</FormLabel>
-          <TextField disabled value={slugify(page.title)} />
-        </FormControl>
-      </Box>
+      <Card>
+        <CardContent>
+          <Box display={"flex"} flexWrap="wrap" gap={4}>
+            <FormControl>
+              <FormLabel>Title</FormLabel>
+              <TextField value={page.title} onChange={handleTitleChange} />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Id</FormLabel>
+              <TextField disabled value={slugify(page.title)} />
+            </FormControl>
+          </Box>
+        </CardContent>
+      </Card>
       <Divider sx={{ my: 5 }} />
       <Sections sections={page.sections} onChange={handleSectionChange} />
       <Grow in={didSectionsChange}>
