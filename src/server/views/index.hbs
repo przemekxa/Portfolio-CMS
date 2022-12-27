@@ -6,7 +6,7 @@
 
     <div
       class="hero-full-container background-image-container white-text-container"
-      style="background-image: url('{{backgroundImage}}')"
+      style="background-image: url('/api/image/{{backgroundImage}}')"
     >
       <div class="container">
         <div class="row">
@@ -29,14 +29,6 @@
         </div>
       </div>
     </div>
-
-    {{#with sections}}
-      <div class="section-container">
-        <div class="container">
-          {{> sections . }}
-        </div>
-      </div>
-    {{/with}}
 
     <script>
       document.addEventListener("DOMContentLoaded", function (event) {

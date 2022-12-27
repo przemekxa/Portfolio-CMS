@@ -5,7 +5,7 @@
       {{! Section - Page Header }}
       {{#if showCard}}
         <div class="col-xs-12">
-          <img src="{{../page.backgroundImage}}" class="img-responsive" alt="">
+          <img src="/api/image/{{../page.backgroundImage}}" class="img-responsive" alt="">
           <div class="card-container">
             <div class="text-center">
               <h1 class="h2">{{../page.title}}</h1>
@@ -30,7 +30,7 @@
 
       {{! Section - 1 image }}
       <div class="col-xs-12">
-        <img src="{{src}}" class="img-responsive" alt="">
+        <img src="/api/image/{{src}}" class="img-responsive" alt="">
         {{#with title}}
           <p>{{.}}</p>
         {{/with}}
@@ -42,13 +42,13 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="row">
           <div class="col-xs-12 col-md-6">
-            <img src="{{images.[0].src}}" class="img-responsive" alt="">
+            <img src="/api/image/{{images.[0].src}}" class="img-responsive" alt="">
             {{#with images.[0].title}}
               <p>{{.}}</p>
             {{/with}}
           </div>
           <div class="col-xs-12 col-md-6">
-            <img src="{{images.[1].src}}" class="img-responsive" alt="">
+            <img src="/api/image/{{images.[1].src}}" class="img-responsive" alt="">
             {{#with images.[1].title}}
               <p>{{.}}</p>
             {{/with}}
@@ -60,7 +60,14 @@
     
       {{! Section - Paragraph }}
       <div class="col-xs-12">
-        {{{contents}}}
+        {{contents}}
+      </div>
+
+    {{else if (eq type "richText")}}
+    
+      {{! Section - Rich Text }}
+      <div class="col-xs-12">
+        {{{value}}}
       </div>
 
     {{else if (eq type "paragraphImage")}}
@@ -72,7 +79,7 @@
             {{{paragraph}}}
           </div>
           <div class="col-xs-12 col-md-6">
-            <img src="{{image}}" class="img-responsive" alt="">
+            <img src="/api/image/{{image}}" class="img-responsive" alt="">
           </div>
         </div>
       </div>
@@ -88,13 +95,13 @@
                   <div class="row">
                     {{#each subpages}}
                       <div class="col-sm-4">
-                        <a href="{{href}}" title="" class="black-image-project-hover">
-                          <img src="{{backgroundImage}}" alt="" class="img-responsive">
+                        <a href="/{{id}}" title="" class="black-image-project-hover">
+                          <img src="/api/image/{{backgroundImage}}" alt="" class="img-responsive">
                         </a>
                         <div class="card-container card-container-lg">
                           <h3>{{title}}</h3>
                           <p>{{description}}</p>
-                          <a href="{{href}}" title="" class="btn btn-default">Discover</a>
+                          <a href="{{id}}" title="" class="btn btn-default">Discover</a>
                         </div>
                       </div>
                     {{/each}}
@@ -128,7 +135,7 @@
               </div>
               <div class="col-md-5 address-container">
                 <ul class="list-unstyled">
-                  {{#with contact.phone}}
+                  {{#with phone}}
                     <li>
                       <span class="fa-icon">
                         <i class="fa fa-phone" aria-hidden="true"></i>
@@ -136,7 +143,7 @@
                       <a href="tel:{{.}}">{{.}}</a>
                     </li>
                   {{/with}}
-                  {{#with contact.email}}
+                  {{#with email}}
                     <li>
                       <span class="fa-icon">
                         <i class="fa fa-at" aria-hidden="true"></i>
@@ -145,7 +152,7 @@
                     </li>
                   {{/with}}
 
-                  {{#with contact.address}}
+                  {{#with address}}
                     <li>
                       <span class="fa-icon">
                         <i class="fa fa fa-map-marker" aria-hidden="true"></i>

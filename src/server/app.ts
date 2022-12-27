@@ -6,6 +6,8 @@ import fastifyCookie from "@fastify/cookie";
 import autoLoad from "@fastify/autoload";
 import path from "path";
 import handlebars from "handlebars";
+import mongo from "@fastify/mongodb";
+import multipart from "@fastify/multipart";
 
 declare module "fastify" {
   interface Session {
@@ -13,7 +15,7 @@ declare module "fastify" {
   }
 
   interface FastifyInstance {
-    authenticated: (request: FastifyRequest, response: FastifyReply) => Promise<void>
+    authenticated: (request: any, reply: any) => Promise<void>
   }
 }
 
@@ -35,6 +37,9 @@ const getApp = async () => {
     trustProxy: true,
     ignoreTrailingSlash: true,
   });
+
+  // Multipart - receiving files
+  app.register(multipart);
 
   // admin-panel
   app.register(fastifyStatic, {
@@ -76,10 +81,16 @@ const getApp = async () => {
       secure: false,
     },
   });
-  app.decorate("authenticated", async (request: FastifyRequest, reply: FastifyReply) => {
+  app.decorate("authenticated", async (request: any, reply: any) => {
     if (request.session.authenticated !== true) {
       reply.status(401).send();
     }
+  });
+
+  // Mongo
+  app.register(mongo, {
+    forceClose: true,
+    url: 'mongodb+srv://admin:admin@portfolio-cms.ofy2npz.mongodb.net/portfolio-cms'
   });
 
   return app;

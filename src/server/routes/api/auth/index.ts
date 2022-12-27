@@ -1,6 +1,4 @@
 import { FastifyPluginAsync, FastifyRequest } from "fastify";
-import mongo from "../../../mongo";
-import { TestModel } from "../../../../common/collections";
 
 const auth: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.post("/login", async (request: FastifyRequest<{ Body: { username: string, password: string }}>, reply) => {
