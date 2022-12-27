@@ -90,7 +90,7 @@ const getApp = async () => {
   // Mongo
   app.register(mongo, {
     forceClose: true,
-    url: 'mongodb+srv://admin:admin@portfolio-cms.ofy2npz.mongodb.net/portfolio-cms'
+    url: process.env.MONGO_URI,
   });
 
   return app;

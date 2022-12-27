@@ -2,7 +2,10 @@ import { FastifyPluginAsync, FastifyRequest } from "fastify";
 
 const auth: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.post("/login", async (request: FastifyRequest<{ Body: { username: string, password: string }}>, reply) => {
-    if(request.body.username === "admin" && request.body.password == "admin") {
+    if(
+      request.body.username === process.env.ADMIN_PANEL_USERNAME && 
+      request.body.password == process.env.ADMIN_PANEL_PASSWORD
+    ) {
       request.session.authenticated = true;
       reply.code(200);
     } else {
