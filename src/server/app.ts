@@ -8,6 +8,7 @@ import path from "path";
 import handlebars from "handlebars";
 import mongo from "@fastify/mongodb";
 import multipart from "@fastify/multipart";
+import cors from "@fastify/cors";
 
 declare module "fastify" {
   interface Session {
@@ -79,6 +80,7 @@ const getApp = async () => {
     secret: "Vv6ZPSeui5PN14vxZYAui4L1blNqirzO/a/ZLgR783/CFs8VafGAgLi6tuL500F1",
     cookie: {
       secure: false,
+      sameSite: false,
     },
   });
   app.decorate("authenticated", async (request: any, reply: any) => {
@@ -92,6 +94,9 @@ const getApp = async () => {
     forceClose: true,
     url: process.env.MONGO_URI,
   });
+
+  // CORS
+  app.register(cors, { credentials: true, origin: "http://localhost:3000" });
 
   return app;
 };
