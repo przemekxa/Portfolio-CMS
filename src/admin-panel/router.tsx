@@ -13,7 +13,7 @@ export const pagesPrefix = "/pages";
 export const router = createBrowserRouter(
   [
     { path: "/", element: <Index /> },
-    { path: "/auth", element: <SignIn /> },
+    { path: "/signin", element: <SignIn /> },
     { path: "/menu", element: <Menu /> },
     { path: "/media", element: <Media /> },
     {

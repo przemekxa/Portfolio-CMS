@@ -1,22 +1,48 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
-export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+  const [errorNotify, setErrorNotify] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const username = data.get("username");
+    const password = data.get("password");
+
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      if (res.status === 401) {
+        throw new Error();
+      }
+
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      setErrorNotify(true);
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,9 +67,9 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -54,14 +80,10 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           <Button
             type="submit"
+            disabled={loading}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
@@ -70,6 +92,21 @@ export default function SignIn() {
           </Button>
         </Box>
       </Box>
+      <Snackbar
+        open={errorNotify}
+        autoHideDuration={6000}
+        onClose={() => setErrorNotify(false)}
+      >
+        <Alert
+          onClose={() => setErrorNotify(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Failed to sign in.
+        </Alert>
+      </Snackbar>
     </Container>
   );
-}
+};
+
+export default SignIn;

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DashboardSidebar from "./DashboardSidebar";
@@ -14,10 +15,7 @@ const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   },
 }));
 
-type Props = {
-  children?: React.ReactNode;
-};
-const DashboardLayout: React.FC<Props> = ({ children }) => {
+const DashboardLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(true);
 
   return (
