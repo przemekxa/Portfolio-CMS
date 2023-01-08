@@ -66,7 +66,6 @@ const SignIn: React.FC = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Username"
             name="username"
             autoComplete="username"
@@ -79,7 +78,6 @@ const SignIn: React.FC = () => {
             name="password"
             label="Password"
             type="password"
-            id="password"
           />
           <Button
             type="submit"
