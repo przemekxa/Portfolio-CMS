@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, MenuItem, MenuList, Popover, Typography } from "@mui/material";
 
 type Props = {
   anchorEl: Element;
-  onClose?: () => void;
+  onClose: () => void;
   open: boolean;
   accountName: string;
 };
@@ -13,9 +14,10 @@ const AccountPopover: React.FC<Props> = ({
   open,
   accountName,
 }) => {
-  const handleSignOut = () => {
-    onClose?.();
-    window.alert("TODO");
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    navigate("/signin");
   };
 
   return (
