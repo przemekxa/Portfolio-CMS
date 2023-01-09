@@ -1,7 +1,7 @@
 import React from "react";
 import slugify from "slugify";
-import { useParams } from "react-router-dom";
-import { pages as fakePages } from "../fakeData";
+import { useNavigate, useParams } from "react-router-dom";
+import { getSessionFetch } from "../checkSessionFetch";
 import { createDefaultPage, Page } from "../../common/pages";
 import { Section } from "../../common/sections";
 
@@ -9,6 +9,7 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   Divider,
   Fab,
   FormControl,
@@ -20,12 +21,14 @@ import SaveIcon from "@mui/icons-material/Save";
 import DashboardLayout from "../components/DashboardLayout";
 import Sections from "../components/Sections";
 
-const getPageData = (pageId?: string) =>
-  fakePages.find((page) => page.id === pageId) || createDefaultPage();
-
 const PagePage: React.FC = () => {
+  const navigate = useNavigate();
+  const sessionFetch = React.useMemo(
+    () => getSessionFetch(navigate),
+    [navigate]
+  );
   const { pageId } = useParams();
-  const [page, _setPage] = React.useState(getPageData(pageId));
+  const [page, _setPage] = React.useState<Page | null>(null);
   const [didSectionsChange, setDidSectionsChange] = React.useState(false);
 
   const setPage: React.Dispatch<React.SetStateAction<Page>> = (action) => {
@@ -34,9 +37,20 @@ const PagePage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    _setPage(getPageData(pageId));
-    setDidSectionsChange(false);
-  }, [pageId]);
+    (async () => {
+      if (!pageId) {
+        _setPage(createDefaultPage());
+      } else {
+        try {
+          const page = await sessionFetch(`/api/pages/${pageId}`);
+          _setPage(page);
+        } catch (error) {
+          navigate("/pages/new");
+        }
+      }
+      setDidSectionsChange(false);
+    })();
+  }, [navigate, pageId, sessionFetch]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPage((prev) => ({
@@ -49,10 +63,30 @@ const PagePage: React.FC = () => {
     setPage((prev) => ({ ...prev, sections }));
   };
 
-  const handleSave = () => {
-    console.log("TODO: handleSaveSection");
-    setDidSectionsChange(false);
+  const handleSave = async () => {
+    if (page === null) {
+      return;
+    }
+
+    try {
+      await sessionFetch(`/api/pages/${page.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(page),
+      });
+      setDidSectionsChange(false);
+    } catch (error) {
+      // TODO
+    }
   };
+
+  if (!page) {
+    return (
+      <DashboardLayout>
+        <CircularProgress />
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
