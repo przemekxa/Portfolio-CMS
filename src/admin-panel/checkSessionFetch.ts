@@ -7,7 +7,10 @@ export const getSessionFetch =
     if (res.status === 401) {
       navigate("/signin");
     } else {
-      const data = res.json();
+      const data = await res.json();
+      if (res.status > 401) {
+        throw new Error(data.message);
+      }
       return data;
     }
   };
