@@ -1,4 +1,5 @@
 import React from "react";
+import { KeyedMutator } from "swr";
 
 import {
   Button,
@@ -12,17 +13,36 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { ImageMetadata } from "../../common/image";
+import { useNavigate } from "react-router-dom";
+import { getSessionFetch } from "../checkSessionFetch";
 
 type Props = {
-  file: File;
+  image: ImageMetadata,
+  mutate: KeyedMutator<ImageMetadata[]>
 };
-const MediaCard: React.FC<Props> = ({ file }) => {
+const MediaCard: React.FC<Props> = ({ image, mutate }) => {
+  const navigate = useNavigate();
+  const sessionFetch = React.useMemo(
+    () => getSessionFetch(navigate),
+    [navigate]
+  );
+
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
 
   const handleCloseDeleteModal = () => setDeleteModalOpen(false);
 
-  const handleDelete = () => {
-    console.log("TODO");
+  const handleDelete = async () => {
+    try {
+      await sessionFetch(`/api/image/${image.id}`, {
+        method: "DELETE"
+      });
+      mutate(images => images?.filter(i => i.id !== image.id));
+    } catch (error) {
+      // TODO
+      console.error(error);
+    }
+    setDeleteModalOpen(false);
   };
 
   return (
@@ -30,11 +50,11 @@ const MediaCard: React.FC<Props> = ({ file }) => {
       <Card>
         <CardMedia
           component="img"
-          src={URL.createObjectURL(file)}
+          src={`/api/image/${image.id}`}
           height={200}
         />
         <CardActions sx={{ justifyContent: "space-between", pl: 3 }}>
-          <Typography>{file.name}</Typography>
+          <Typography>{image.filename}</Typography>
           <IconButton onClick={() => setDeleteModalOpen(true)}>
             <DeleteForeverIcon />
           </IconButton>
@@ -42,11 +62,11 @@ const MediaCard: React.FC<Props> = ({ file }) => {
       </Card>
       <Dialog open={deleteModalOpen} onClose={handleCloseDeleteModal}>
         <DialogContent>
-          <Typography>Are you sure, you want to remove {file.name}?</Typography>
+          <Typography>Are you sure, you want to remove {image.filename}?<br />(ID: {image.id})</Typography>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={handleCloseDeleteModal}>
-            No, I want it
+            Cancel
           </Button>
           <Button variant="contained" onClick={handleDelete}>
             Delete

@@ -2,6 +2,7 @@ import { FastifyPluginAsync, FastifyRequest } from "fastify";
 import { v4 as uuidv4 } from "uuid";
 import { Binary } from "mongodb";
 import { ImageMetadata, ImageWithData } from "../../../../common/image";
+import { MultipartValue } from "@fastify/multipart";
 
 const image: FastifyPluginAsync = async (fastify): Promise<void> => {
   // Get identifiers of all the images
@@ -20,9 +21,10 @@ const image: FastifyPluginAsync = async (fastify): Promise<void> => {
     const file = await request.file();
     if(file) {
       const id = uuidv4()
-      const mimetype = file.mimetype
+      const mimetype = file.mimetype;
+      const filename = (file.fields["filename"] as MultipartValue).value as string;
       const binary = new Binary(await file.toBuffer());
-      const document: ImageWithData = {id: id, mimetype: mimetype, data: binary};
+      const document: ImageWithData = { id: id, mimetype: mimetype, data: binary, filename: filename };
       const result = await fastify.mongo.db?.collection("image").insertOne(document);
       if(result) {
         reply.send(id);
