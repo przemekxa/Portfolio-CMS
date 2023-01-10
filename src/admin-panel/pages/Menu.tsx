@@ -1,48 +1,65 @@
 import React, { useEffect, useState } from "react";
-import DashboardLayout from "../components/DashboardLayout";
-import { MenuItem } from "../../common/menu";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Card, CardActions, CardContent, Fab, Grid, IconButton, TextField } from "@mui/material";
+import DashboardLayout from "../components/DashboardLayout";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Fab,
+  Grid,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { reorder } from "../dndHelpers";
+import { getSessionFetch } from "../checkSessionFetch";
+import { MenuItem } from "../../common/menu";
 
 const Menu: React.FC = () => {
   const navigate = useNavigate();
+  const sessionFetch = React.useMemo(
+    () => getSessionFetch(navigate),
+    [navigate]
+  );
 
   const [list, setList] = useState<MenuItem[]>([]);
 
-  const loadMenu = async () => {
-    const reply = await fetch("http://localhost:3001/api/menu", { credentials: "include" });
-    if(reply.ok) {
-      const json: MenuItem[] = await reply.json();
-      setList(json);
-    } else {
-      navigate("/auth");
+  const loadMenu = React.useCallback(async () => {
+    try {
+      const data = await sessionFetch("/api/menu");
+      setList(data);
+    } catch (error) {
+      // TODO
+      console.error(error);
     }
-  }
+  }, [sessionFetch]);
 
   const saveMenu = async () => {
-    const reply = await fetch(
-      "http://localhost:3001/api/menu", 
-      { 
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(list)
-      }
-    );
+    const reply = await sessionFetch("/api/menu", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(list),
+    });
     alert(reply.ok ? "Saved" : "Cannot save menu");
-  }
+    // TODO
+  };
 
   const onTitleChange = (id: string, title: string) => {
     setList(
       list.map((element) => {
         return element.id === id
-          ? { ...element, title: title}
-          : { ...element }
+          ? { ...element, title: title }
+          : { ...element };
       })
     );
   };
@@ -50,9 +67,7 @@ const Menu: React.FC = () => {
   const onHrefChange = (id: string, href: string) => {
     setList(
       list.map((element) => {
-        return element.id === id
-          ? { ...element, href: href}
-          : { ...element }
+        return element.id === id ? { ...element, href: href } : { ...element };
       })
     );
   };
@@ -77,69 +92,97 @@ const Menu: React.FC = () => {
 
   useEffect(() => {
     loadMenu();
-  }, []);
+  }, [loadMenu]);
 
-  return <DashboardLayout>
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Grid container spacing={2}>
-      <Droppable droppableId="menuList">
-        {(provided) => (
-          <Grid
-              container
-              spacing={2}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {
-                list.map((item: MenuItem, index) =>
-                  <Draggable 
+  return (
+    <DashboardLayout>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Grid container spacing={2}>
+          <Droppable droppableId="menuList">
+            {(provided) => (
+              <Grid
+                container
+                spacing={2}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {list.map((item: MenuItem, index) => (
+                  <Draggable
                     key={item.id}
                     draggableId={item.id.toString()}
                     index={index}
                   >
-                  {(provided) => (
-                    <Grid
-                      item
-                      xs={12}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <Card >
-                        <CardContent>
-                          <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                              <h4>{item.id} – {item.title}</h4>
+                    {(provided) => (
+                      <Grid
+                        item
+                        xs={12}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <Card>
+                          <CardContent>
+                            <Grid container spacing={2}>
+                              <Grid item xs={12}>
+                                <h4>
+                                  {item.id} – {item.title}
+                                </h4>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <TextField
+                                  id="title"
+                                  label="Title"
+                                  value={item.title}
+                                  onChange={(e) =>
+                                    onTitleChange(item.id, e.target.value)
+                                  }
+                                  fullWidth
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <TextField
+                                  id="href"
+                                  label="Href"
+                                  value={item.href}
+                                  onChange={(e) =>
+                                    onHrefChange(item.id, e.target.value)
+                                  }
+                                  fullWidth
+                                />
+                              </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                              <TextField id="title" label="Title" value={item.title} onChange={(e) => onTitleChange(item.id, e.target.value)} fullWidth />
-                            </Grid>
-                            <Grid item xs={6}>
-                            <TextField id="href" label="Href" value={item.href} onChange={(e) => onHrefChange(item.id, e.target.value)} fullWidth />
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                        <CardActions disableSpacing sx={{ justifyContent: "flex-end" }}>
-                          <IconButton {...provided.dragHandleProps}>
-                            <OpenWithIcon />
-                          </IconButton>
-                          <IconButton onClick={() => setList(list => list.filter(element => element.id !== item.id))}>
-                            <DeleteForeverIcon />
-                          </IconButton>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  )}
+                          </CardContent>
+                          <CardActions
+                            disableSpacing
+                            sx={{ justifyContent: "flex-end" }}
+                          >
+                            <IconButton {...provided.dragHandleProps}>
+                              <OpenWithIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={() =>
+                                setList((list) =>
+                                  list.filter(
+                                    (element) => element.id !== item.id
+                                  )
+                                )
+                              }
+                            >
+                              <DeleteForeverIcon />
+                            </IconButton>
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                    )}
                   </Draggable>
-                )
-              }
-            {provided.placeholder}
-          </Grid>
-        )}
-      </Droppable>
-        <Button onClick={saveMenu}>Save</Button>
-        <Button onClick={loadMenu}>Restore</Button>
-      </Grid>
-      <Box
+                ))}
+                {provided.placeholder}
+              </Grid>
+            )}
+          </Droppable>
+          <Button onClick={saveMenu}>Save</Button>
+          <Button onClick={loadMenu}>Restore</Button>
+        </Grid>
+        <Box
           position="fixed"
           bottom={0}
           right={0}
@@ -149,13 +192,19 @@ const Menu: React.FC = () => {
           <Fab
             color="primary"
             aria-label="add"
-            onClick={() => setList((list) => [...list, {id: list.length.toString(), title: "", href: ""}])}
+            onClick={() =>
+              setList((list) => [
+                ...list,
+                { id: list.length.toString(), title: "", href: "" },
+              ])
+            }
           >
             <AddIcon />
           </Fab>
-      </Box>
-    </DragDropContext>
-  </DashboardLayout>;
+        </Box>
+      </DragDropContext>
+    </DashboardLayout>
+  );
 };
 
 export default Menu;
