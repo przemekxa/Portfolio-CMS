@@ -1,5 +1,6 @@
 import React from "react";
 import slugify from "slugify";
+import { useSWRConfig } from "swr";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSessionFetch } from "../checkSessionFetch";
 import { createDefaultPage, Page } from "../../common/pages";
@@ -23,11 +24,9 @@ import Sections from "../components/Sections";
 
 const PagePage: React.FC = () => {
   const navigate = useNavigate();
-  const sessionFetch = React.useMemo(
-    () => getSessionFetch(navigate),
-    [navigate]
-  );
+  const { mutate } = useSWRConfig();
   const { pageId } = useParams();
+  const isNewPage = pageId === undefined;
   const [page, _setPage] = React.useState<Page | null>(null);
   const [didSectionsChange, setDidSectionsChange] = React.useState(false);
 
@@ -36,9 +35,14 @@ const PagePage: React.FC = () => {
     _setPage(action);
   };
 
+  const sessionFetch = React.useMemo(
+    () => getSessionFetch(navigate),
+    [navigate]
+  );
+
   React.useEffect(() => {
     (async () => {
-      if (!pageId) {
+      if (isNewPage) {
         _setPage(createDefaultPage());
       } else {
         try {
@@ -50,7 +54,7 @@ const PagePage: React.FC = () => {
       }
       setDidSectionsChange(false);
     })();
-  }, [navigate, pageId, sessionFetch]);
+  }, [isNewPage, navigate, pageId, sessionFetch]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setPage((prev) => ({
@@ -74,7 +78,11 @@ const PagePage: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(page),
       });
+      mutate("/api/pages");
       setDidSectionsChange(false);
+      if (isNewPage) {
+        navigate(`/pages/${page.id}`);
+      }
     } catch (error) {
       // TODO
     }
