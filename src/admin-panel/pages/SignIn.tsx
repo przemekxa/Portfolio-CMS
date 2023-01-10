@@ -38,7 +38,7 @@ const SignIn: React.FC = () => {
       }
 
       setLoading(false);
-      navigate("/");
+      navigate("/pages");
     } catch (error) {
       setErrorNotify(true);
       setLoading(false);

@@ -1,6 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from "fastify";
 import { Page } from "../../../../common/pages";
-import { getAllPages, getPage, setPage } from "../db";
+import { deletePage, getAllPages, getPage, setPage } from "../db";
 
 const page: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.get("/", { preHandler: fastify.authenticated }, async (req, res) => {
@@ -25,6 +25,14 @@ const page: FastifyPluginAsync = async (fastify): Promise<void> => {
       reply
     ) => {
       setPage(fastify.mongo, request.params.id, request.body);
+    }
+  );
+
+  fastify.delete(
+    "/:id",
+    { preHandler: fastify.authenticated },
+    async (req: FastifyRequest<{ Params: { id: string } }>, res) => {
+      deletePage(fastify.mongo, req.params.id);
     }
   );
 };

@@ -101,6 +101,13 @@ export const setPage = async (
   }
 };
 
+export const deletePage = async (mongo: FastifyMongoObject, id: string) => {
+  const result = await mongo.db?.collection("page").deleteOne({ id: id });
+  if (!result || result.deletedCount === 0) {
+    throw new Error("Cannot delete page");
+  }
+};
+
 // Subpages
 
 export const getSubpages = async (
