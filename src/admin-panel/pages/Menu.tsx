@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "../components/DashboardLayout";
 import {
   Box,
   Button,
@@ -95,7 +94,7 @@ const Menu: React.FC = () => {
   }, [loadMenu]);
 
   return (
-    <DashboardLayout>
+    <>
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid container spacing={2}>
           <Droppable droppableId="menuList">
@@ -203,7 +202,7 @@ const Menu: React.FC = () => {
           </Fab>
         </Box>
       </DragDropContext>
-    </DashboardLayout>
+    </>
   );
 };
 

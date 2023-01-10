@@ -1,8 +1,7 @@
 import React from "react";
-import DashboardLayout from "../components/DashboardLayout";
 
 const Home: React.FC = () => {
-  return <DashboardLayout>Home</DashboardLayout>;
+  return <>Home</>;
 };
 
 export default Home;

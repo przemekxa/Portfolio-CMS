@@ -34,10 +34,7 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
     noSsr: false,
   });
 
-  const { data: pages, mutate } = useSWR<Page[]>(
-    "/api/pages",
-    getSessionFetch(navigate)
-  );
+  const { data: pages, mutate } = useSWR<Page[]>("/api/pages");
 
   const handleDeletePage = async (pageId: string) => {
     try {
@@ -74,10 +71,16 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
 
       <CustomDivider />
       <Box sx={{ flexGrow: 1 }}>
-        <NavItem icon={<HomeIcon />} href={pagesPrefix} title={"Home"} />
+        <NavItem
+          onClick={onClose}
+          icon={<HomeIcon />}
+          href={pagesPrefix}
+          title={"Home"}
+        />
         {pages?.map((page) => (
           <NavItem
             key={page.id}
+            onClick={onClose}
             icon={<ArticleIcon />}
             href={`${pagesPrefix}/${page.id}`}
             title={page.title}
@@ -86,14 +89,25 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
         ))}
         <NavItem
           icon={<ControlPointIcon />}
+          onClick={onClose}
           href="/pages/new"
           title="New Page"
         />
       </Box>
       <CustomDivider />
       <Box sx={{ marginBottom: 3 }}>
-        <NavItem icon={<NearMeIcon />} href="/menu" title="Menu" />
-        <NavItem icon={<PhotoCameraIcon />} href="/media" title="Media" />
+        <NavItem
+          icon={<NearMeIcon />}
+          href="/menu"
+          title="Menu"
+          onClick={onClose}
+        />
+        <NavItem
+          icon={<PhotoCameraIcon />}
+          href="/media"
+          title="Media"
+          onClick={onClose}
+        />
       </Box>
     </Box>
   );

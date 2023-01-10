@@ -2,7 +2,6 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 
 import { Box, Grid, Stack, Typography, useTheme } from "@mui/material";
-import DashboardLayout from "../components/DashboardLayout";
 import MediaCard from "../components/MediaCard";
 
 const Media: React.FC = () => {
@@ -18,7 +17,7 @@ const Media: React.FC = () => {
   const dropZoneInputProps = getInputProps();
 
   return (
-    <DashboardLayout>
+    <>
       <Box
         display="flex"
         alignItems="center"
@@ -53,7 +52,7 @@ const Media: React.FC = () => {
           </Grid>
         ))}
       </Grid>
-    </DashboardLayout>
+    </>
   );
 };
 

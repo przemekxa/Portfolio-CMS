@@ -19,7 +19,6 @@ import {
   TextField,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import DashboardLayout from "../components/DashboardLayout";
 import Sections from "../components/Sections";
 
 const PagePage: React.FC = () => {
@@ -89,15 +88,11 @@ const PagePage: React.FC = () => {
   };
 
   if (!page) {
-    return (
-      <DashboardLayout>
-        <CircularProgress />
-      </DashboardLayout>
-    );
+    return <CircularProgress />;
   }
 
   return (
-    <DashboardLayout>
+    <>
       <Card>
         <CardContent>
           <Box display={"flex"} flexWrap="wrap" gap={4}>
@@ -127,7 +122,7 @@ const PagePage: React.FC = () => {
           </Fab>
         </Box>
       </Grow>
-    </DashboardLayout>
+    </>
   );
 };
 

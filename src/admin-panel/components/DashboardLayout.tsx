@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 import { Box, Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -15,8 +16,8 @@ const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   },
 }));
 
-const DashboardLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [isSidebarOpen, setSidebarOpen] = React.useState(true);
+const DashboardLayout: React.FC = () => {
+  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
   return (
     <>
@@ -31,7 +32,9 @@ const DashboardLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
           paddingTop={4}
           paddingBottom={16}
         >
-          <Container>{children}</Container>
+          <Container>
+            <Outlet />
+          </Container>
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />

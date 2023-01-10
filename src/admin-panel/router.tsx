@@ -1,5 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Configs from "./components/Configs";
+import DashboardLayout from "./components/DashboardLayout";
 import Home from "./pages/Home";
 
 import Media from "./pages/Media";
@@ -13,14 +15,23 @@ export const pagesPrefix = "/pages";
 export const router = createBrowserRouter(
   [
     { path: "/signin", element: <SignIn /> },
-    { path: "/menu", element: <Menu /> },
-    { path: "/media", element: <Media /> },
     {
-      path: pagesPrefix,
+      element: (
+        <Configs>
+          <DashboardLayout />
+        </Configs>
+      ),
       children: [
-        { index: true, element: <Home /> },
-        { path: "new", element: <Page /> },
-        { path: ":pageId", element: <Page /> },
+        { path: "/menu", element: <Menu /> },
+        { path: "/media", element: <Media /> },
+        {
+          path: pagesPrefix,
+          children: [
+            { index: true, element: <Home /> },
+            { path: "new", element: <Page /> },
+            { path: ":pageId", element: <Page /> },
+          ],
+        },
       ],
     },
   ],

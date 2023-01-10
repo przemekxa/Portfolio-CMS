@@ -19,8 +19,9 @@ type Props = {
   icon: React.ReactNode;
   title: string;
   onDelete?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 };
-const NavItem: React.FC<Props> = ({ href, icon, title, onDelete }) => {
+const NavItem: React.FC<Props> = ({ href, icon, title, onDelete, onClick }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
@@ -49,6 +50,7 @@ const NavItem: React.FC<Props> = ({ href, icon, title, onDelete }) => {
           <Button
             startIcon={icon}
             disableRipple
+            onClick={onClick}
             sx={{
               backgroundColor: active ? "rgba(255,255,255, 0.08)" : undefined,
               borderRadius: 1,
