@@ -22,9 +22,9 @@ import {
 const IMAGE_SIZE = 164;
 
 type Props = {
-  onSelect?: (mediaId: string | null) => void;
+  onChange?: (mediaId: string | null) => void;
 };
-const MediaPicker: React.FC<Props> = ({ onSelect }) => {
+const MediaPicker: React.FC<Props> = ({ onChange }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isUpMd = useMediaQuery(theme.breakpoints.up("sm"));
@@ -57,7 +57,7 @@ const MediaPicker: React.FC<Props> = ({ onSelect }) => {
 
   const handleSelect = (mediaId: string | null) => {
     setSelected(mediaId);
-    onSelect?.(mediaId);
+    onChange?.(mediaId);
     handleCloseModal();
   };
 

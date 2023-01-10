@@ -58,7 +58,7 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
     >
       <div>
         <Box sx={{ p: 3 }}>
-          <Link to="/">
+          <Link to="/pages">
             <Logo
               sx={{
                 height: 42,
