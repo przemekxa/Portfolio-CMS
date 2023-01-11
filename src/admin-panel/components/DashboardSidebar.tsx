@@ -9,6 +9,7 @@ import NearMeIcon from "@mui/icons-material/NearMe";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import ArticleIcon from "@mui/icons-material/Article";
+import ShortTextIcon from '@mui/icons-material/ShortText';
 import Logo from "./Logo";
 import NavItem from "./NavItem";
 import { getSessionFetch } from "../checkSessionFetch";
@@ -76,6 +77,12 @@ const DashboardSidebar: React.FC<Props> = ({ open, onClose }) => {
           icon={<HomeIcon />}
           href={pagesPrefix}
           title={"Home"}
+        />
+        <NavItem
+          onClick={onClose}
+          icon={<ShortTextIcon />}
+          href={"/footer"}
+          title={"Footer"}
         />
         {pages?.map((page) => (
           <NavItem

@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Configs from "./components/Configs";
 import DashboardLayout from "./components/DashboardLayout";
+import FooterPage from "./pages/Footer";
 import Home from "./pages/Home";
 
 import Media from "./pages/Media";
@@ -25,6 +26,7 @@ export const router = createBrowserRouter(
         { path: "/", element: <Home /> },
         { path: "/menu", element: <Menu /> },
         { path: "/media", element: <Media /> },
+        { path: "/footer", element: <FooterPage /> },
         {
           path: pagesPrefix,
           children: [
