@@ -22,6 +22,7 @@ export const router = createBrowserRouter(
         </Configs>
       ),
       children: [
+        { path: "/", element: <Home /> },
         { path: "/menu", element: <Menu /> },
         { path: "/media", element: <Media /> },
         {
