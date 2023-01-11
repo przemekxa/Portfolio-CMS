@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import useSWR from "swr";
 import { useDropzone } from "react-dropzone";
 
@@ -44,7 +44,7 @@ const Media: React.FC = () => {
       }
     }
     reader.readAsArrayBuffer(acceptedFiles[0]);
-  }, []);
+  }, [mutate, sessionFetch]);
     
   const theme = useTheme();
   const { getRootProps, getInputProps } = useDropzone({
