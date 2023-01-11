@@ -9,7 +9,9 @@ import {
   Fab,
   Grid,
   IconButton,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -95,6 +97,7 @@ const Menu: React.FC = () => {
 
   return (
     <>
+      <Typography variant="h1" mb={2}>Menu</Typography>
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid container spacing={2}>
           <Droppable droppableId="menuList">
@@ -178,8 +181,10 @@ const Menu: React.FC = () => {
               </Grid>
             )}
           </Droppable>
-          <Button onClick={saveMenu}>Save</Button>
-          <Button onClick={loadMenu}>Restore</Button>
+          <Stack direction={"row"} spacing={2} mt={2}>
+            <Button variant={"contained"} onClick={saveMenu}>Save</Button>
+            <Button variant={"outlined"} onClick={loadMenu}>Restore</Button>
+          </Stack>
         </Grid>
         <Box
           position="fixed"

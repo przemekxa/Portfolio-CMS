@@ -61,6 +61,7 @@ const Media: React.FC = () => {
 
   return (
     <>
+      <Typography variant="h1" mb={2}>Media</Typography>
       <Box
         display="flex"
         alignItems="center"
