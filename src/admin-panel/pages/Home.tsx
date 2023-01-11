@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Homepage } from "../../common/homepage";
 import { getSessionFetch } from "../checkSessionFetch";
+import MediaPicker from "../components/MediaPicker";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -27,13 +28,16 @@ const Home: React.FC = () => {
   }, [sessionFetch]);
 
   const saveHome = async () => {
-    const reply = await sessionFetch("/api/homepage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    alert(reply.ok ? "Saved" : "Cannot save menu");
-    // TODO
+    try {
+      await sessionFetch("/api/homepage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      // TODO
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -75,7 +79,10 @@ const Home: React.FC = () => {
     <Card>
       <CardContent>
         <Typography variant="h6" mb={2}>Background image</Typography>
-        TODO
+        <MediaPicker
+          mediaId={data.backgroundImage}
+          onChange={id => setData({...data, backgroundImage: id ?? ""})}
+        />
       </CardContent>
     </Card>
 
