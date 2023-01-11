@@ -1,6 +1,6 @@
 export interface Homepage {
   title: string,
-  backgroundImage: number,
+  backgroundImage: string,
   typingTitle: string,
   typingItems: string[]
 };
