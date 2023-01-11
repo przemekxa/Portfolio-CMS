@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import { useNavigate } from "react-router-dom";
 import { ImageMetadata } from "../../common/image";
@@ -22,15 +22,20 @@ import {
 const IMAGE_SIZE = 164;
 
 type Props = {
+  mediaId: string | null,
   onChange?: (mediaId: string | null) => void;
 };
-const MediaPicker: React.FC<Props> = ({ onChange }) => {
+const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isUpMd = useMediaQuery(theme.breakpoints.up("sm"));
   const { data: mediaList } = useSWR<ImageMetadata[]>("/api/image");
-  const [selected, setSelected] = React.useState<string | null>(null);
+  const [selected, setSelected] = React.useState<string | null>(mediaId);
   const [modalOpen, setModalOpen] = React.useState(false);
+
+  useEffect(() => {
+    setSelected(mediaId)
+  }, [mediaId]);
 
   const SelectedMedia = () => (
     <Card sx={{ width: IMAGE_SIZE + 60 }}>
