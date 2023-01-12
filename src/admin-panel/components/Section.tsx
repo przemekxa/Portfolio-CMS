@@ -15,7 +15,7 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import OpenWithIcon from "@mui/icons-material/OpenWith";
 import EditIcon from "@mui/icons-material/Edit";
-import { Section } from "../../common/sections";
+import { Section, sectionTypes } from "../../common/sections";
 import SectionData from "./SectionData";
 import EditSectionModal from "./EditSectionModal";
 
@@ -41,8 +41,11 @@ const SectionComponent = React.forwardRef<any, Props>(
 
     return (
       <>
-        <Card ref={ref} sx={{ width: "100%", marginBottom: 4 }} {...props}>
+        <Card ref={ref} sx={{ width: "100%", marginBottom: 2 }} {...props}>
           <CardContent>
+            <Typography variant="h6" mb={2}>
+              {sectionTypes.find(s => s.type === section.type)?.name ?? "Unknown"}
+            </Typography>
             <SectionData section={section} />
           </CardContent>
           <CardActions disableSpacing sx={{ justifyContent: "flex-end" }}>

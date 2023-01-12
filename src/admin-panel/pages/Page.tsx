@@ -11,12 +11,13 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  Divider,
   Fab,
-  FormControl,
   FormLabel,
+  Grid,
   Grow,
+  Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import Sections from "../components/Sections";
@@ -93,21 +94,43 @@ const PagePage: React.FC = () => {
 
   return (
     <>
+      <Typography variant="h1" mb={2}>{page.title === "" ? "Empty page" : page.title}</Typography>
       <Card>
         <CardContent>
-          <Box display={"flex"} flexWrap="wrap" gap={4}>
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <TextField value={page.title} onChange={handleTitleChange} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Id</FormLabel>
-              <TextField disabled value={slugify(page.title)} />
-            </FormControl>
-          </Box>
+          <Grid container rowSpacing={4} columnSpacing={4}>
+            <Grid item xs={6}>
+              <Stack spacing={2}>
+                <FormLabel>Title</FormLabel>
+                <TextField fullWidth value={page.title} onChange={handleTitleChange} />
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack spacing={2}>
+                <FormLabel>ID</FormLabel>
+                <TextField fullWidth disabled value={slugify(page.title)} />
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack spacing={2}>
+                <FormLabel>Description</FormLabel>
+                <TextField 
+                  fullWidth
+                  multiline
+                  value={page.description}
+                  onChange={ e => setPage({...page, description: e.target.value}) } 
+                />
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack spacing={2}>
+                <FormLabel>Subpages</FormLabel>
+                TODO
+              </Stack>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
-      <Divider sx={{ my: 5 }} />
+      <Typography variant="h3" my={4}>Sections</Typography>
       <Sections sections={page.sections} onChange={handleSectionChange} />
       <Grow in={didSectionsChange}>
         <Box
