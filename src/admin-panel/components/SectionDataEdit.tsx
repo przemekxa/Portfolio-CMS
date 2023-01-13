@@ -4,6 +4,7 @@ import {
   isOneImage,
   isPageHeader,
   isParagraph,
+  isParagraphImage,
   isRichText,
   isTwoImages,
   Section,
@@ -14,6 +15,7 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
+  Stack,
   Switch,
   TextField,
   Typography,
@@ -170,6 +172,32 @@ const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
           setSection((prev) => ({ ...prev, value: data }))
         }
       />
+    );
+  }
+
+  if (isParagraphImage(section)) {
+    return (
+      <Stack spacing={2} alignItems="center">
+        <MediaPicker
+          mediaId={section.image}
+          onChange={(id) => {
+            setSection((prev) => ({
+              ...prev,
+              image: id || "",
+            }));
+          }}
+        />
+
+        <TextField
+          fullWidth
+          multiline
+          minRows={5}
+          value={section.paragraph}
+          onChange={(e) =>
+            setSection((prev) => ({ ...prev, paragraph: e.target.value }))
+          }
+        />
+      </Stack>
     );
   }
 
