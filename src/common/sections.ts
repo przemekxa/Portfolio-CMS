@@ -1,4 +1,13 @@
-export type SectionTypeId = "pageHeader" | "header" | "1image" | "2images" | "paragraph" | "richText" | "paragraphImage" | "subpageCarousel" | "contact";
+export type SectionTypeId =
+  | "pageHeader"
+  | "header"
+  | "1image"
+  | "2images"
+  | "paragraph"
+  | "richText"
+  | "paragraphImage"
+  | "subpageCarousel"
+  | "contact";
 
 interface SectionType {
   type: SectionTypeId;
@@ -8,7 +17,7 @@ interface SectionType {
 export const sectionTypes: SectionType[] = [
   {
     type: "pageHeader",
-    name: "Page Header"
+    name: "Page Header",
   },
   {
     type: "header",
@@ -16,11 +25,11 @@ export const sectionTypes: SectionType[] = [
   },
   {
     type: "1image",
-    name: "One Image"
+    name: "One Image",
   },
   {
     type: "2images",
-    name: "Two Images"
+    name: "Two Images",
   },
   {
     type: "paragraph",
@@ -95,7 +104,29 @@ export interface SubpageCarousel extends SectionData {
   type: "subpageCarousel";
 }
 
-type SocialMediaIcon = "facebook" | "twitter" | "linkedin" | "github" | "pinterest" | "steam" | "medium" | "quora" | "reddit" | "snapchat" | "spotify" | "telegram" | "amazon" | "imdb" | "skype" | "tumblr" | "whatsapp" | "youtube" | "flickr" | "gitlab" | "instagram" | "slack";
+type SocialMediaIcon =
+  | "facebook"
+  | "twitter"
+  | "linkedin"
+  | "github"
+  | "pinterest"
+  | "steam"
+  | "medium"
+  | "quora"
+  | "reddit"
+  | "snapchat"
+  | "spotify"
+  | "telegram"
+  | "amazon"
+  | "imdb"
+  | "skype"
+  | "tumblr"
+  | "whatsapp"
+  | "youtube"
+  | "flickr"
+  | "gitlab"
+  | "instagram"
+  | "slack";
 
 interface SocialMedia {
   icon: SocialMediaIcon;
@@ -111,14 +142,27 @@ export interface Contact extends SectionData {
   social: SocialMedia[];
 }
 
-export type Section = PageHeader | Header | OneImage | TwoImages | Paragraph | RichText | ParagraphImage | SubpageCarousel | Contact;
+export type Section =
+  | PageHeader
+  | Header
+  | OneImage
+  | TwoImages
+  | Paragraph
+  | RichText
+  | ParagraphImage
+  | SubpageCarousel
+  | Contact;
 
-export const isPageHeader = (s: Section): s is PageHeader => s.type === "pageHeader";
+export const isPageHeader = (s: Section): s is PageHeader =>
+  s.type === "pageHeader";
 export const isHeader = (s: Section): s is Header => s.type === "header";
 export const isOneImage = (s: Section): s is OneImage => s.type === "1image";
 export const isTwoImages = (s: Section): s is TwoImages => s.type === "2images";
-export const isParagraph = (s: Section): s is Paragraph => s.type === "paragraph";
+export const isParagraph = (s: Section): s is Paragraph =>
+  s.type === "paragraph";
 export const isRichText = (s: Section): s is RichText => s.type === "richText";
-export const isParagraphImage = (s: Section): s is ParagraphImage => s.type === "paragraphImage";
-export const isSubpageCarousel = (s: Section): s is SubpageCarousel => s.type === "subpageCarousel";
+export const isParagraphImage = (s: Section): s is ParagraphImage =>
+  s.type === "paragraphImage";
+export const isSubpageCarousel = (s: Section): s is SubpageCarousel =>
+  s.type === "subpageCarousel";
 export const isContact = (s: Section): s is Contact => s.type === "contact";
