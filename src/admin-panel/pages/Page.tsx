@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import Sections from "../components/Sections";
+import SubpagePicker from "../components/SubpagePicker";
 
 const PagePage: React.FC = () => {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const PagePage: React.FC = () => {
       }
     } catch (error) {
       // TODO
+      console.error(error);
     }
   };
 
@@ -124,7 +126,10 @@ const PagePage: React.FC = () => {
             <Grid item xs={12}>
               <Stack spacing={2}>
                 <FormLabel>Subpages</FormLabel>
-                TODO
+                <SubpagePicker
+                  subpageIds={page.subpages}
+                  onChange={subpages => setPage({...page, subpages: subpages})} 
+                />
               </Stack>
             </Grid>
           </Grid>

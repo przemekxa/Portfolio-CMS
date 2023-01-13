@@ -8,6 +8,7 @@ export interface PageSummary {
 }
 
 export interface Page extends PageSummary {
+  _id?: string;
   subpages: string[]; // page id
   sections: Section[];
 }

@@ -1,10 +1,10 @@
 import { FastifyPluginAsync, FastifyRequest } from "fastify";
 import { Page } from "../../../../common/pages";
-import { deletePage, getAllPages, getPage, setPage } from "../db";
+import { deletePage, getAllPageSummaries, getPage, setPage } from "../db";
 
 const page: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.get("/", { preHandler: fastify.authenticated }, async (req, res) => {
-    const pages = await getAllPages(fastify.mongo);
+    const pages = await getAllPageSummaries(fastify.mongo);
     return pages;
   });
 

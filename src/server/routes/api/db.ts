@@ -64,9 +64,12 @@ export const setHomepage = async (
 };
 
 // Page
-export const getAllPages = async (mongo: FastifyMongoObject) => {
+export const getAllPageSummaries = async (mongo: FastifyMongoObject) => {
   const collection = mongo.db?.collection<Page>("page");
-  return collection?.find().toArray();
+  return collection?.find<PageSummary>(
+    {}, 
+    { projection: { "id": true, "title": true, "description": true, "backgroundImage": true }}
+  ).toArray();
 };
 
 export const getPage = async (
@@ -86,6 +89,7 @@ export const setPage = async (
   id: string,
   page: Page
 ) => {
+  delete page._id;
   const result = await mongo.db
     ?.collection("page")
     .updateOne({ id: id }, { $set: page }, { upsert: true });
