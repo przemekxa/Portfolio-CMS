@@ -1,6 +1,7 @@
 import React from "react";
 import {
   isHeader,
+  isOneImage,
   isPageHeader,
   isParagraph,
   isRichText,
@@ -49,11 +50,42 @@ const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
   if (isHeader(section)) {
     return (
       <TextField
+        fullWidth
         value={section.header}
         onChange={(e) =>
           setSection((prev) => ({ ...prev, header: e.target.value }))
         }
       />
+    );
+  }
+
+  if (isOneImage(section)) {
+    return (
+      <Grid container spacing={2} justifyItems="center">
+        <Grid container item justifyContent="center" alignItems="end">
+          <MediaPicker
+            mediaId={section.src}
+            onChange={(id) => {
+              setSection((prev) => ({
+                ...prev,
+                src: id || "",
+              }));
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Title"
+            sx={{ margin: 2 }}
+            value={section.title}
+            onChange={(e) => {
+              setSection((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }));
+            }}
+          />
+        </Grid>
+      </Grid>
     );
   }
 
@@ -119,6 +151,7 @@ const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
   if (isParagraph(section)) {
     return (
       <TextField
+        fullWidth
         multiline
         minRows={5}
         value={section.contents}

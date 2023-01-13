@@ -46,7 +46,7 @@ const EditSectionModal: React.FC<Props> = ({
         {children}
       </Box>
       <Dialog open={modalOpen} onClose={handleClose} fullWidth>
-        <DialogTitle>{`Edit ${sectionType?.name}`}</DialogTitle>
+        <DialogTitle>{`${add ? "" : "Edit"} ${sectionType?.name}`}</DialogTitle>
         <DialogContent>
           <SectionDataEdit section={section} setSection={setSection} />
         </DialogContent>
