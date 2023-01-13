@@ -101,8 +101,7 @@ const SectionData: React.FC<Props> = ({ section }) => {
   }
 
   if (isParagraph(section)) {
-    const component = HTMLParser(section.contents);
-    return <>{component}</>;
+    return <p>{section.contents}</p>;
   }
 
   if (isRichText(section)) {
