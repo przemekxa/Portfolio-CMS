@@ -1,22 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Fab,
-  Grid,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import OpenWithIcon from "@mui/icons-material/OpenWith";
-import {
   DragDropContext,
   Draggable,
   Droppable,
@@ -26,6 +10,23 @@ import { reorder } from "../dndHelpers";
 import { getSessionFetch } from "../checkSessionFetch";
 import { MenuItem } from "../../common/menu";
 
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Fab,
+  Grid,
+  Grow,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import SaveIcon from "@mui/icons-material/Save";
+import OpenWithIcon from "@mui/icons-material/OpenWith";
+
 const Menu: React.FC = () => {
   const navigate = useNavigate();
   const sessionFetch = React.useMemo(
@@ -33,12 +34,19 @@ const Menu: React.FC = () => {
     [navigate]
   );
 
-  const [list, setList] = useState<MenuItem[]>([]);
+  const [list, _setList] = useState<MenuItem[]>([]);
+  const [didMenuChange, setDidMenuChange] = React.useState(false);
+
+  const setList = (action: React.SetStateAction<MenuItem[]>) => {
+    setDidMenuChange(true);
+    _setList(action);
+  };
 
   const loadMenu = React.useCallback(async () => {
     try {
       const data = await sessionFetch("/api/menu");
       setList(data);
+      setDidMenuChange(false);
     } catch (error) {
       // TODO
       console.error(error);
@@ -46,13 +54,17 @@ const Menu: React.FC = () => {
   }, [sessionFetch]);
 
   const saveMenu = async () => {
-    const reply = await sessionFetch("/api/menu", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(list),
-    });
-    alert(reply.ok ? "Saved" : "Cannot save menu");
-    // TODO
+    try {
+      await sessionFetch("/api/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(list),
+      });
+      setDidMenuChange(false);
+    } catch (error) {
+      // TODO
+      console.error("Cannot save menu: ", error);
+    }
   };
 
   const onTitleChange = (id: string, title: string) => {
@@ -97,7 +109,9 @@ const Menu: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h1" mb={2}>Menu</Typography>
+      <Typography variant="h1" mb={2}>
+        Menu
+      </Typography>
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid container spacing={2}>
           <Droppable droppableId="menuList">
@@ -181,18 +195,22 @@ const Menu: React.FC = () => {
               </Grid>
             )}
           </Droppable>
-          <Stack direction={"row"} spacing={2} mt={2}>
-            <Button variant={"contained"} onClick={saveMenu}>Save</Button>
-            <Button variant={"outlined"} onClick={loadMenu}>Restore</Button>
-          </Stack>
         </Grid>
         <Box
           position="fixed"
+          display="flex"
+          flexDirection="row"
+          gap={3}
           bottom={0}
           right={0}
           marginBottom={4}
           marginRight={4}
         >
+          <Grow in={didMenuChange}>
+            <Fab color="primary" aria-label="save" onClick={saveMenu}>
+              <SaveIcon />
+            </Fab>
+          </Grow>
           <Fab
             color="primary"
             aria-label="add"
