@@ -22,15 +22,15 @@ import {
 const IMAGE_SIZE = 164;
 
 type Props = {
-  mediaId: string | null;
-  onChange?: (mediaId: string | null) => void;
+  mediaId?: string;
+  onChange?: (mediaId?: string) => void;
 };
 const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const { data: mediaList } = useSWR<ImageMetadata[]>("/api/image");
-  const [selected, setSelected] = React.useState<string | null>(mediaId);
+  const [selected, setSelected] = React.useState<string | undefined>(mediaId);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
         sx={{ cursor: "pointer" }}
       />
       <CardActions sx={{ justifyContent: "flex-end" }}>
-        <Button color="error" onClick={() => handleSelect(null)}>
+        <Button color="error" onClick={() => handleSelect(undefined)}>
           Clear
         </Button>
       </CardActions>
@@ -60,7 +60,7 @@ const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
   const mediaAvailable = mediaList && mediaList.length > 0;
   const handleCloseModal = () => setModalOpen(false);
 
-  const handleSelect = (mediaId: string | null) => {
+  const handleSelect = (mediaId?: string) => {
     setSelected(mediaId);
     onChange?.(mediaId);
     handleCloseModal();

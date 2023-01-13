@@ -4,17 +4,21 @@ import {
   isPageHeader,
   isParagraph,
   isRichText,
+  isTwoImages,
   Section,
+  TwoImages,
 } from "../../common/sections";
 
 import {
   FormControlLabel,
   FormGroup,
+  Grid,
   Switch,
   TextField,
   Typography,
 } from "@mui/material";
 import RichTextEditor from "./RichTextEditor";
+import MediaPicker from "./MediaPicker";
 
 type Props = {
   section: Section;
@@ -50,6 +54,65 @@ const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
           setSection((prev) => ({ ...prev, header: e.target.value }))
         }
       />
+    );
+  }
+
+  if (isTwoImages(section)) {
+    return (
+      <Grid container spacing={2}>
+        <Grid container item xs={6} justifyContent="center" alignItems="end">
+          <MediaPicker
+            mediaId={section.images[0].src}
+            onChange={(id) => {
+              setSection((prev: TwoImages) => ({
+                ...prev,
+                images: [{ ...prev.images[0], src: id || "" }, prev.images[1]],
+              }));
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Title"
+            sx={{ margin: 2 }}
+            value={section.images[0].title}
+            onChange={(e) => {
+              setSection((prev: TwoImages) => ({
+                ...prev,
+                images: [
+                  { ...prev.images[0], title: e.target.value },
+                  prev.images[1],
+                ],
+              }));
+            }}
+          />
+        </Grid>
+        <Grid container item xs={6} justifyContent="center" alignItems="end">
+          <MediaPicker
+            mediaId={section.images[1].src}
+            onChange={(id) => {
+              setSection((prev: TwoImages) => ({
+                ...prev,
+                images: [prev.images[0], { ...prev.images[1], src: id || "" }],
+              }));
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Title"
+            sx={{ margin: 2 }}
+            value={section.images[1].title}
+            onChange={(e) => {
+              setSection((prev: TwoImages) => ({
+                ...prev,
+                images: [
+                  prev.images[0],
+                  { ...prev.images[1], title: e.target.value },
+                ],
+              }));
+            }}
+          />
+        </Grid>
+      </Grid>
     );
   }
 
