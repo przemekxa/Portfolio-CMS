@@ -22,19 +22,19 @@ import {
 const IMAGE_SIZE = 164;
 
 type Props = {
-  mediaId: string | null,
+  mediaId: string | null;
   onChange?: (mediaId: string | null) => void;
 };
 const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const isUpMd = useMediaQuery(theme.breakpoints.up("sm"));
+  const isUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const { data: mediaList } = useSWR<ImageMetadata[]>("/api/image");
   const [selected, setSelected] = React.useState<string | null>(mediaId);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   useEffect(() => {
-    setSelected(mediaId)
+    setSelected(mediaId);
   }, [mediaId]);
 
   const SelectedMedia = () => (
@@ -73,7 +73,7 @@ const MediaPicker: React.FC<Props> = ({ mediaId, onChange }) => {
         <DialogTitle>Select Media</DialogTitle>
         <DialogContent sx={{ justifyContent: "center", height: 450 }}>
           {mediaAvailable ? (
-            <ImageList cols={isUpMd ? 3 : 1} rowHeight={IMAGE_SIZE}>
+            <ImageList cols={isUpSm ? 3 : 1} rowHeight={IMAGE_SIZE}>
               {mediaList.map((media) => (
                 <ImageListItem
                   key={media.id}

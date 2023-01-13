@@ -1,13 +1,19 @@
 import React from "react";
-
 import {
   isHeader,
+  isPageHeader,
   isParagraph,
   isRichText,
   Section,
 } from "../../common/sections";
 
-import { TextField } from "@mui/material";
+import {
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  TextField,
+  Typography,
+} from "@mui/material";
 import RichTextEditor from "./RichTextEditor";
 
 type Props = {
@@ -15,6 +21,27 @@ type Props = {
   setSection: React.Dispatch<React.SetStateAction<Section>>;
 };
 const SectionDataEdit: React.FC<Props> = ({ section, setSection }) => {
+  if (isPageHeader(section)) {
+    return (
+      <>
+        <Typography>Displays the title of the page.</Typography>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={section.showCard}
+                onChange={(e, value) =>
+                  setSection((prev) => ({ ...prev, showCard: value }))
+                }
+              />
+            }
+            label="Show the page card"
+          />
+        </FormGroup>
+      </>
+    );
+  }
+
   if (isHeader(section)) {
     return (
       <TextField

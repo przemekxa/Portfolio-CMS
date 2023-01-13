@@ -5,9 +5,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React from "react";
-import { Section } from "../../common/sections";
+import { Section, sectionTypes } from "../../common/sections";
 import SectionDataEdit from "./SectionDataEdit";
 
 interface Props extends React.PropsWithChildren {
@@ -22,6 +24,8 @@ const EditSectionModal: React.FC<Props> = ({
   children,
   add,
 }) => {
+  const theme = useTheme();
+  const isUpMd = useMediaQuery(theme.breakpoints.up("md"));
   const [modalOpen, setModalOpen] = React.useState(false);
   const [section, setSection] = React.useState(value);
 
@@ -32,14 +36,16 @@ const EditSectionModal: React.FC<Props> = ({
     handleClose();
   };
 
+  const sectionType = sectionTypes.find((sType) => sType.type === section.type);
+
   return (
     <>
       <Box sx={{ cursor: "pointer" }} onClick={() => setModalOpen(true)}>
         {children}
       </Box>
       <Dialog open={modalOpen} onClose={handleClose}>
-        <DialogTitle>Edit Section: {section.type}</DialogTitle>
-        <DialogContent>
+        <DialogTitle>{`Edit ${sectionType?.name}`}</DialogTitle>
+        <DialogContent sx={{ minWidth: isUpMd ? "50vw" : "80vw" }}>
           <SectionDataEdit section={section} setSection={setSection} />
         </DialogContent>
         <DialogActions>
