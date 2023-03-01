@@ -22,6 +22,7 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import Sections from "../components/Sections";
 import SubpagePicker from "../components/SubpagePicker";
+import MediaPicker from "../components/MediaPicker";
 
 const PagePage: React.FC = () => {
   const navigate = useNavigate();
@@ -129,6 +130,15 @@ const PagePage: React.FC = () => {
                 <SubpagePicker
                   subpageIds={page.subpages}
                   onChange={subpages => setPage({...page, subpages: subpages})} 
+                />
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack spacing={2}>
+                <FormLabel>Background image</FormLabel>
+                <MediaPicker
+                  mediaId={page.backgroundImage}
+                  onChange={id => setPage({...page, backgroundImage: id})}
                 />
               </Stack>
             </Grid>
