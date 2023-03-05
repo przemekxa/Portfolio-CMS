@@ -2,7 +2,7 @@ import React from "react";
 import HTMLParser from "html-react-parser";
 
 import {
-  isContact,
+  // isContact,
   isHeader,
   isOneImage,
   isPageHeader,
@@ -137,33 +137,33 @@ const SectionData: React.FC<Props> = ({ section }) => {
     );
   }
 
-  if (isContact(section)) {
-    return (
-      <Box
-        display="grid"
-        gridTemplateColumns="auto 1fr"
-        columnGap={2}
-        rowGap={2}
-      >
-        <p style={{ justifySelf: "end" }}>Phone:</p>
-        <p>{section.phone}</p>
-        <p style={{ justifySelf: "end" }}>Email:</p>
-        <p>{section.email}</p>
-        <p style={{ justifySelf: "end" }}>Address:</p>
-        <p>{section.address}</p>
-        <p style={{ justifySelf: "end" }}>Social media header:</p>
-        <p>{section.socialHeader}</p>
-        <p style={{ justifySelf: "end" }}>Social media items:</p>
-        <ul style={{ display: "block", listStylePosition: "inside" }}>
-          {section.social.map((s) => (
-            <li>
-              {s.icon} &ndash; <a href={s.href}>{s.href}</a>
-            </li>
-          ))}
-        </ul>
-      </Box>
-    );
-  }
+  // if (isContact(section)) {
+  //   return (
+  //     <Box
+  //       display="grid"
+  //       gridTemplateColumns="auto 1fr"
+  //       columnGap={2}
+  //       rowGap={2}
+  //     >
+  //       <p style={{ justifySelf: "end" }}>Phone:</p>
+  //       <p>{section.phone}</p>
+  //       <p style={{ justifySelf: "end" }}>Email:</p>
+  //       <p>{section.email}</p>
+  //       <p style={{ justifySelf: "end" }}>Address:</p>
+  //       <p>{section.address}</p>
+  //       <p style={{ justifySelf: "end" }}>Social media header:</p>
+  //       <p>{section.socialHeader}</p>
+  //       <p style={{ justifySelf: "end" }}>Social media items:</p>
+  //       <ul style={{ display: "block", listStylePosition: "inside" }}>
+  //         {section.social.map((s) => (
+  //           <li>
+  //             {s.icon} &ndash; <a href={s.href}>{s.href}</a>
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     </Box>
+  //   );
+  // }
 
   return null;
 };

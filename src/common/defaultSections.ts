@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { SectionTypeId, PageHeader, Header, OneImage, TwoImages, Paragraph, RichText, ParagraphImage, Contact, SubpageCarousel } from "./sections";
+// import { SectionTypeId, PageHeader, Header, OneImage, TwoImages, Paragraph, RichText, ParagraphImage, Contact, SubpageCarousel } from "./sections";
+import { SectionTypeId, PageHeader, Header, OneImage, TwoImages, Paragraph, RichText, ParagraphImage, SubpageCarousel } from "./sections";
+
 
 export const createDefaultSection = (sectionType: SectionTypeId) => {
   const id = uuidv4();
@@ -78,30 +80,30 @@ export const createDefaultSection = (sectionType: SectionTypeId) => {
       };
       return subpageCarousel;
 
-    case "contact":
-      const contact: Contact = {
-        id,
-        type: "contact",
-        phone: "",
-        email: "",
-        address: "",
-        socialHeader: "",
-        social: [
-          {
-            icon: "facebook",
-            href: "",
-          },
-          {
-            icon: "twitter",
-            href: "",
-          },
-          {
-            icon: "linkedin",
-            href: "",
-          },
-        ]
-      };
-      return contact;
+    // case "contact":
+    //   const contact: Contact = {
+    //     id,
+    //     type: "contact",
+    //     phone: "",
+    //     email: "",
+    //     address: "",
+    //     socialHeader: "",
+    //     social: [
+    //       {
+    //         icon: "facebook",
+    //         href: "",
+    //       },
+    //       {
+    //         icon: "twitter",
+    //         href: "",
+    //       },
+    //       {
+    //         icon: "linkedin",
+    //         href: "",
+    //       },
+    //     ]
+    //   };
+    //   return contact;
 
     default:
       const _exhaustiveCheck: never = sectionType;

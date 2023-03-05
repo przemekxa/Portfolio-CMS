@@ -6,8 +6,8 @@ export type SectionTypeId =
   | "paragraph"
   | "richText"
   | "paragraphImage"
-  | "subpageCarousel"
-  | "contact";
+  | "subpageCarousel";
+  // | "contact";
 
 interface SectionType {
   type: SectionTypeId;
@@ -47,10 +47,10 @@ export const sectionTypes: SectionType[] = [
     type: "subpageCarousel",
     name: "Subpage Carousel",
   },
-  {
-    type: "contact",
-    name: "Contact",
-  },
+  // {
+  //   type: "contact",
+  //   name: "Contact",
+  // },
 ];
 
 interface SectionData {
@@ -133,14 +133,14 @@ interface SocialMedia {
   href: string;
 }
 
-export interface Contact extends SectionData {
-  type: "contact";
-  phone: string;
-  email: string;
-  address: string;
-  socialHeader: string;
-  social: SocialMedia[];
-}
+// export interface Contact extends SectionData {
+//   type: "contact";
+//   phone: string;
+//   email: string;
+//   address: string;
+//   socialHeader: string;
+//   social: SocialMedia[];
+// }
 
 export type Section =
   | PageHeader
@@ -150,8 +150,8 @@ export type Section =
   | Paragraph
   | RichText
   | ParagraphImage
-  | SubpageCarousel
-  | Contact;
+  | SubpageCarousel;
+  // | Contact;
 
 export const isPageHeader = (s: Section): s is PageHeader =>
   s.type === "pageHeader";
@@ -165,4 +165,4 @@ export const isParagraphImage = (s: Section): s is ParagraphImage =>
   s.type === "paragraphImage";
 export const isSubpageCarousel = (s: Section): s is SubpageCarousel =>
   s.type === "subpageCarousel";
-export const isContact = (s: Section): s is Contact => s.type === "contact";
+// export const isContact = (s: Section): s is Contact => s.type === "contact";
