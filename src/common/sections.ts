@@ -104,34 +104,34 @@ export interface SubpageCarousel extends SectionData {
   type: "subpageCarousel";
 }
 
-type SocialMediaIcon =
-  | "facebook"
-  | "twitter"
-  | "linkedin"
-  | "github"
-  | "pinterest"
-  | "steam"
-  | "medium"
-  | "quora"
-  | "reddit"
-  | "snapchat"
-  | "spotify"
-  | "telegram"
-  | "amazon"
-  | "imdb"
-  | "skype"
-  | "tumblr"
-  | "whatsapp"
-  | "youtube"
-  | "flickr"
-  | "gitlab"
-  | "instagram"
-  | "slack";
+// type SocialMediaIcon =
+//   | "facebook"
+//   | "twitter"
+//   | "linkedin"
+//   | "github"
+//   | "pinterest"
+//   | "steam"
+//   | "medium"
+//   | "quora"
+//   | "reddit"
+//   | "snapchat"
+//   | "spotify"
+//   | "telegram"
+//   | "amazon"
+//   | "imdb"
+//   | "skype"
+//   | "tumblr"
+//   | "whatsapp"
+//   | "youtube"
+//   | "flickr"
+//   | "gitlab"
+//   | "instagram"
+//   | "slack";
 
-interface SocialMedia {
-  icon: SocialMediaIcon;
-  href: string;
-}
+// interface SocialMedia {
+//   icon: SocialMediaIcon;
+//   href: string;
+// }
 
 // export interface Contact extends SectionData {
 //   type: "contact";
